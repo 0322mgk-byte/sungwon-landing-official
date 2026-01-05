@@ -43,18 +43,73 @@ const NAV_GROUP_X = 0;                       // 미세 조정 좌우 (px)
 const NAV_GROUP_Y = 0;                       // 미세 조정 상하 (px)
 const NAV_GAP = 100;                          // 메뉴 사이 간격 (px)
 
-// 네비게이션 메뉴 항목
+// 네비게이션 메뉴 항목 (서브메뉴 포함)
 const NAV_ITEMS = [
-  { label: "사업안내", href: "#business" },
-  { label: "입지환경", href: "#premium" },
-  { label: "단지안내", href: "#complex" },
-  { label: "세대안내", href: "#unit" },
-  { label: "방문예약", href: "#reservation" },
+  {
+    label: "사업개요",
+    href: "/business",
+    subItems: []
+  },
+  {
+    label: "입지환경",
+    href: "/premium",
+    subItems: [
+      { label: "프리미엄", href: "/premium/premium" },
+    ]
+  },
+  {
+    label: "단지안내",
+    href: "/complex",
+    subItems: [
+      { label: "단지배치도", href: "/complex/layout" },
+      { label: "동호수배치도", href: "/complex/unit-layout" },
+      { label: "커뮤니티", href: "/complex/community" },
+    ]
+  },
+  {
+    label: "세대안내",
+    href: "/unit",
+    subItems: [
+      { label: "인테리어", href: "/unit/interior" },
+      { label: "타입안내", href: "/unit/type" },
+    ]
+  },
+  {
+    label: "방문예약",
+    href: "/reservation",
+    subItems: []
+  },
 ];
+
+// ============================================
+// 🔽 드롭다운 메뉴 설정
+// ============================================
+const DROPDOWN_ENABLED = true;                        // 드롭다운 메뉴 사용 여부
+const DROPDOWN_BG = "rgba(255,255,255,1)";            // 드롭다운 배경색
+const DROPDOWN_HEIGHT = 180;                          // 드롭다운 높이 (px)
+const DROPDOWN_BORDER_COLOR = "rgba(230,230,230,1)";  // 드롭다운 테두리 색상
+const DROPDOWN_ANIM_DURATION = 0.3;                   // 드롭다운 애니메이션 시간 (초)
+const DROPDOWN_PADDING_TOP = 24;                      // 드롭다운 상단 여백 (px)
+
+// 드롭다운 서브메뉴 글자 설정
+const DROPDOWN_ITEM_COLOR = "rgba(100,100,100,1)";    // 서브메뉴 글자색
+const DROPDOWN_ITEM_HOVER_COLOR = "rgba(200,50,50,1)"; // 서브메뉴 호버 글자색 (빨간색)
+const DROPDOWN_ITEM_SIZE = 14;                        // 서브메뉴 글자 크기 (px)
+const DROPDOWN_ITEM_WEIGHT = 400;                     // 서브메뉴 글자 굵기 - 100~900
+const DROPDOWN_ITEM_LINE_HEIGHT = 1.5;                // 서브메뉴 줄 높이 - 1.0=글자크기, 1.5=1.5배
+const DROPDOWN_ITEM_LETTER_SPACING = 0;               // 서브메뉴 자간 (px)
+const DROPDOWN_ITEM_GAP = 16;                         // 서브메뉴 항목 세로 간격 (px)
+const DROPDOWN_ITEM_PADDING_X = 12;                   // 서브메뉴 항목 좌우 여백 (px)
+const DROPDOWN_ITEM_PADDING_Y = 6;                    // 서브메뉴 항목 상하 여백 (px)
+
+// 드롭다운 컬럼 설정
+const DROPDOWN_COLUMN_MIN_WIDTH = 100;                // 컬럼 최소 너비 (px) - 자간/여백에 따라 자동 확장
 
 // 네비게이션 스타일
 const NAV_FONT_SIZE = 15;                    // 글자 크기 (px)
+const NAV_HOVER_SCALE = 1.1;                 // 호버 시 확대 비율 - 1.0=원본, 1.1=10% 확대
 const NAV_FONT_WEIGHT = 300;                 // 글자 굵기 - 100~900
+const NAV_HOVER_FONT_WEIGHT = 500;           // 호버 시 글자 굵기 - 100~900
 const NAV_COLOR = "rgba(0, 0, 0, 1)";        // 글자 색상 (R,G,B,투명도 0~1)
 const NAV_HOVER_COLOR = "rgba(0, 28, 61,1)"; // 호버 시 색상 (R,G,B,투명도 0~1)
 const NAV_LETTER_SPACING = 0;                // 기본 자간 (px)
@@ -88,6 +143,11 @@ const PHONE_FONT_WEIGHT = 700;               // 글자 굵기 - 100~900
 const PHONE_COLOR = "rgba(255,255,255,1)";   // 글자 색상 - rgba(R,G,B,투명도 0~1)
 const PHONE_GAP = 12;                        // 아이콘과 번호 사이 간격 (px)
 
+// 전화번호 깜빡임 애니메이션 설정
+const PHONE_BLINK_ENABLED = true;            // 깜빡임 사용 여부
+const PHONE_BLINK_COLOR = "rgba(255,100,0,1)"; // 깜빡임 색상 (강렬한 주황색) - rgba(R,G,B,투명도 0~1)
+const PHONE_BLINK_DURATION = 0.8;            // 깜빡임 속도 (초) - 한 색상에서 다른 색상으로 전환 시간
+
 // ============================================
 // 📱 모바일 메뉴 설정
 // ============================================
@@ -101,6 +161,8 @@ const MOBILE_MENU_ITEM_GAP = 16;             // 모바일 메뉴 항목 간격 (
 
 export default function Header() {
   const headerRef = useRef(null)
+  const phoneNumberRef = useRef(null)
+  const phoneIconRef = useRef(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
 
@@ -112,6 +174,21 @@ export default function Header() {
         duration: ANIM_DURATION,
         ease: ANIM_EASE
       })
+    }
+  }, [])
+
+  // 전화번호 깜빡임 애니메이션
+  useEffect(() => {
+    if (PHONE_BLINK_ENABLED && phoneNumberRef.current && phoneIconRef.current) {
+      const blinkConfig = {
+        color: PHONE_BLINK_COLOR,
+        duration: PHONE_BLINK_DURATION,
+        repeat: -1,
+        yoyo: true,
+        ease: "steps(1)"
+      }
+      gsap.to(phoneNumberRef.current, blinkConfig)
+      gsap.to(phoneIconRef.current, blinkConfig)
     }
   }, [])
 
@@ -136,18 +213,20 @@ export default function Header() {
             transform: `translateX(${LEFT_GROUP_POSITION === 0 ? 0 : LEFT_GROUP_POSITION === 100 ? -100 : -50}%) translate(${LEFT_GROUP_X}px, ${LEFT_GROUP_Y}px)`
           }}
         >
-          <Image
-            src={LOGO_SRC}
-            alt="로고"
-            width={LOGO_SIZE}
-            height={0}
-            className="object-contain h-auto"
-            style={{
-              width: `${LOGO_SIZE}px`,
-              height: 'auto',
-              transform: `translate(${LOGO_X}px, ${LOGO_Y}px)`
-            }}
-          />
+          <a href="/" className="cursor-pointer">
+            <Image
+              src={LOGO_SRC}
+              alt="로고"
+              width={LOGO_SIZE}
+              height={0}
+              className="object-contain h-auto"
+              style={{
+                width: `${LOGO_SIZE}px`,
+                height: 'auto',
+                transform: `translate(${LOGO_X}px, ${LOGO_Y}px)`
+              }}
+            />
+          </a>
         </div>
 
         {/* 중간: 네비게이션 (데스크톱) */}
@@ -176,6 +255,8 @@ export default function Header() {
                 gsap.to(e.currentTarget, {
                   color: NAV_HOVER_COLOR,
                   letterSpacing: `${NAV_HOVER_LETTER_SPACING}px`,
+                  scale: NAV_HOVER_SCALE,
+                  fontWeight: NAV_HOVER_FONT_WEIGHT,
                   duration: NAV_HOVER_ANIM_DURATION,
                   ease: "power2.out"
                 })
@@ -184,6 +265,8 @@ export default function Header() {
                 gsap.to(e.currentTarget, {
                   color: NAV_COLOR,
                   letterSpacing: `${NAV_LETTER_SPACING}px`,
+                  scale: 1,
+                  fontWeight: NAV_FONT_WEIGHT,
                   duration: NAV_HOVER_ANIM_DURATION,
                   ease: "power2.out"
                 })
@@ -215,12 +298,14 @@ export default function Header() {
               gap: `${PHONE_GAP}px`
             }}
           >
-            <Phone
-              size={PHONE_ICON_SIZE}
-              style={{ color: PHONE_ICON_COLOR }}
-              className={PHONE_ICON_FILL ? "fill-current" : ""}
-            />
+            <span ref={phoneIconRef} style={{ color: PHONE_ICON_COLOR, display: 'flex' }}>
+              <Phone
+                size={PHONE_ICON_SIZE}
+                className={PHONE_ICON_FILL ? "fill-current" : ""}
+              />
+            </span>
             <span
+              ref={phoneNumberRef}
               style={{
                 fontSize: `${PHONE_FONT_SIZE}px`,
                 fontWeight: PHONE_FONT_WEIGHT,
@@ -246,10 +331,65 @@ export default function Header() {
         </Button>
       </div>
 
+      {/* 데스크톱 드롭다운 메가메뉴 */}
+      {DROPDOWN_ENABLED && isHovered && (
+        <div
+          className="absolute left-0 w-full hidden lg:block"
+          style={{
+            top: `${HEADER_HEIGHT}px`,
+            height: `${DROPDOWN_HEIGHT}px`,
+            backgroundColor: DROPDOWN_BG,
+            borderTop: `1px solid ${DROPDOWN_BORDER_COLOR}`,
+            borderBottom: `1px solid ${DROPDOWN_BORDER_COLOR}`,
+            animation: `slideDown ${DROPDOWN_ANIM_DURATION}s ease-out`,
+            paddingTop: `${DROPDOWN_PADDING_TOP}px`,
+          }}
+        >
+          <div
+            className="w-full h-full flex justify-center"
+            style={{ gap: `${NAV_GAP}px` }}
+          >
+            {NAV_ITEMS.map((item, index) => (
+              <div
+                key={index}
+                className="flex flex-col items-center"
+                style={{ minWidth: `${DROPDOWN_COLUMN_MIN_WIDTH}px` }}
+              >
+                {/* 서브메뉴 항목들 */}
+                <div className="flex flex-col items-center" style={{ gap: `${DROPDOWN_ITEM_GAP}px` }}>
+                  {item.subItems.map((subItem, subIndex) => (
+                    <a
+                      key={subIndex}
+                      href={subItem.href}
+                      className="transition-colors cursor-pointer whitespace-nowrap"
+                      style={{
+                        fontSize: `${DROPDOWN_ITEM_SIZE}px`,
+                        fontWeight: DROPDOWN_ITEM_WEIGHT,
+                        color: DROPDOWN_ITEM_COLOR,
+                        lineHeight: DROPDOWN_ITEM_LINE_HEIGHT,
+                        letterSpacing: `${DROPDOWN_ITEM_LETTER_SPACING}px`,
+                        paddingLeft: `${DROPDOWN_ITEM_PADDING_X}px`,
+                        paddingRight: `${DROPDOWN_ITEM_PADDING_X}px`,
+                        paddingTop: `${DROPDOWN_ITEM_PADDING_Y}px`,
+                        paddingBottom: `${DROPDOWN_ITEM_PADDING_Y}px`,
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.color = DROPDOWN_ITEM_HOVER_COLOR}
+                      onMouseLeave={(e) => e.currentTarget.style.color = DROPDOWN_ITEM_COLOR}
+                    >
+                      {subItem.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* 모바일 메뉴 드롭다운 */}
       {isMenuOpen && (
         <div
-          className="md:hidden text-center shadow-lg"
+          className="lg:hidden text-center shadow-lg"
           style={{
             backgroundColor: MOBILE_MENU_BG,
             paddingTop: `${MOBILE_MENU_PADDING_Y}px`,
@@ -258,17 +398,36 @@ export default function Header() {
         >
           <div className="flex flex-col" style={{ gap: `${MOBILE_MENU_ITEM_GAP}px` }}>
             {NAV_ITEMS.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                className="block transition-colors"
-                style={{ color: MOBILE_MENU_TEXT_COLOR }}
-                onClick={() => setIsMenuOpen(false)}
-                onMouseEnter={(e) => e.currentTarget.style.color = MOBILE_MENU_HOVER_COLOR}
-                onMouseLeave={(e) => e.currentTarget.style.color = MOBILE_MENU_TEXT_COLOR}
-              >
-                {item.label}
-              </a>
+              <div key={index}>
+                <a
+                  href={item.href}
+                  className="block transition-colors font-medium"
+                  style={{ color: MOBILE_MENU_TEXT_COLOR }}
+                  onClick={() => setIsMenuOpen(false)}
+                  onMouseEnter={(e) => e.currentTarget.style.color = MOBILE_MENU_HOVER_COLOR}
+                  onMouseLeave={(e) => e.currentTarget.style.color = MOBILE_MENU_TEXT_COLOR}
+                >
+                  {item.label}
+                </a>
+                {/* 모바일 서브메뉴 */}
+                {item.subItems.length > 0 && (
+                  <div className="flex flex-col mt-2" style={{ gap: '8px' }}>
+                    {item.subItems.map((subItem, subIndex) => (
+                      <a
+                        key={subIndex}
+                        href={subItem.href}
+                        className="block transition-colors text-sm"
+                        style={{ color: DROPDOWN_ITEM_COLOR }}
+                        onClick={() => setIsMenuOpen(false)}
+                        onMouseEnter={(e) => e.currentTarget.style.color = DROPDOWN_ITEM_HOVER_COLOR}
+                        onMouseLeave={(e) => e.currentTarget.style.color = DROPDOWN_ITEM_COLOR}
+                      >
+                        {subItem.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>

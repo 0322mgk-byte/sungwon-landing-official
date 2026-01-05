@@ -1,7 +1,20 @@
+name: Landing Design System
+description: Next.js 랜딩페이지 Config 패턴 디자인 시스템 - Header, Hero, Footer 템플릿 제공
+dependencies: gsap, lucide-react, @radix-ui/react-slot, class-variance-authority, clsx, tailwind-merge
+---
+
 # Landing Page Design System
 
 Next.js 기반 랜딩페이지의 Config 패턴 디자인 시스템입니다.
 비개발자도 쉽게 수정할 수 있도록 모든 설정값을 파일 상단에 상수로 정의합니다.
+
+## 트리거
+
+사용자가 다음과 같이 요청할 때 이 skill을 사용합니다:
+- "랜딩페이지 만들어줘"
+- "헤더/히어로/푸터 컴포넌트 만들어줘"
+- "Config 패턴 랜딩페이지"
+- "/landing-design-system"
 
 ## 핵심 원칙
 
@@ -78,11 +91,30 @@ const SETTING_NAME = value;              // 설명 - 사용법/예시
 // ============================================
 ```
 
+## 컴포넌트 설명
+
+### Header.tsx
+- 로고, 네비게이션, CTA 버튼 포함
+- 호버 시 배경색 변경
+- GSAP 자간 애니메이션
+- 반응형 모바일 메뉴
+
+### Hero.tsx
+- 비디오/이미지 배경 지원
+- GSAP 확대/축소 애니메이션
+- 클릭 시 애니메이션 재생
+
+### Footer.tsx
+- 로고, 회사 정보, 카피라이트
+- 대표번호, SNS 링크
+- 유연한 정렬 시스템
+
 ## 파일 구조
 
 ```
 .claude/skills/landing-design-system/
-├── SKILL.md                 # 이 문서
+├── Skill.md                # 이 문서
+├── QUICK_GUIDE.md          # 빠른 시작 가이드
 └── templates/
     ├── Header.tsx          # 헤더 컴포넌트 템플릿
     ├── Hero.tsx            # 히어로 섹션 템플릿

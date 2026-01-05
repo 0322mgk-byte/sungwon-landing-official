@@ -8,7 +8,9 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(taskkill /F /PID 45164)",
-      "Bash(powershell -Command:*)"
+      "Bash(powershell -Command:*)",
+      "Bash(git clone:*)",
+      "Bash(xcopy:*)"
     ]
   }
 }

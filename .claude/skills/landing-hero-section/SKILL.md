@@ -1,5 +1,7 @@
 name: hero-section
 description: 히어로 섹션 생성 - GSAP 애니메이션 + 이미지/비디오 배경 지원
+dependencies: gsap
+---
 
 # Hero Section Skill
 

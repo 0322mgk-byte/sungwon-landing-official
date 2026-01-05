@@ -1,4 +1,8 @@
+"use client"
+
 import Image from "next/image";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 
 // ============================================
 // 🎨 푸터 설정
@@ -68,6 +72,11 @@ const PHONE_NUMBER_WEIGHT = 900;      // 번호 굵기 - 100~900
 const PHONE_NUMBER_COLOR = "rgba(255,255,255,1)"; // 번호 색상 - rgba(R,G,B,투명도 0~1)
 const PHONE_GAP = 15;                 // 라벨과 번호 사이 간격 (px)
 
+// 전화번호 깜빡임 애니메이션 설정 (헤더와 반대로 동작)
+const PHONE_BLINK_ENABLED = true;            // 깜빡임 사용 여부
+const PHONE_BLINK_COLOR = "rgba(255,100,0,1)"; // 깜빡임 색상 (강렬한 주황색) - rgba(R,G,B,투명도 0~1)
+const PHONE_BLINK_DURATION = 0.8;            // 깜빡임 속도 (초)
+
 // 더 알아보기 설정
 const EXPLORE_X = 0;                  // 좌우 위치 (px) - 음수: 왼쪽, 양수: 오른쪽
 const EXPLORE_Y = 0;                  // 상하 위치 (px) - 음수: 위로, 양수: 아래로
@@ -80,7 +89,7 @@ const EXPLORE_TITLE_COLOR = "rgba(178,190,190,1)"; // 제목 색상 - rgba(R,G,B
 const SNS_X = 0;                      // 좌우 위치 (px) - 음수: 왼쪽, 양수: 오른쪽
 const SNS_Y = 0;                      // 상하 위치 (px) - 음수: 위로, 양수: 아래로
 const SNS_ICONS = [
-  { src: "/naver_blog_logo 1.png", alt: "네이버 블로그", href: "#" },
+  { src: "/naver_blog_logo 1.png", alt: "네이버 블로그", href: "https://blog.naver.com/house_unni" },
   { src: "/instagram-logo-png-transparent-background-300x300.png", alt: "인스타그램", href: "https://www.instagram.com/house_unni/reels/" },
   { src: "/pngegg.png", alt: "유튜브", href: "https://www.youtube.com/@%EC%A7%91%EC%9E%98%EB%B3%B4%EB%8A%94%EC%96%B8%EB%8B%88" },
   { src: "/KakaoTalk_logo.svg.png", alt: "카카오톡", href: "https://open.kakao.com/o/sYpCdW6h" },
@@ -108,6 +117,24 @@ const getAlignY = (align: string) => {
 };
 
 export default function Footer() {
+  const phoneNumberRef = useRef(null)
+
+  // 전화번호 깜빡임 애니메이션 (헤더와 반대: 주황색에서 시작)
+  useEffect(() => {
+    if (PHONE_BLINK_ENABLED && phoneNumberRef.current) {
+      gsap.fromTo(phoneNumberRef.current,
+        { color: PHONE_BLINK_COLOR },
+        {
+          color: PHONE_NUMBER_COLOR,
+          duration: PHONE_BLINK_DURATION,
+          repeat: -1,
+          yoyo: true,
+          ease: "steps(1)"
+        }
+      )
+    }
+  }, [])
+
   return (
     <footer className={`text-gray-400 ${FOOTER_PADDING_X} overflow-hidden`} style={{ height: `${FOOTER_HEIGHT}px`, backgroundColor: FOOTER_BG }}>
       <div className={`max-w-7xl mx-auto h-full flex flex-col md:flex-row items-stretch justify-between ${CONTENT_GAP}`}>
@@ -193,12 +220,15 @@ export default function Footer() {
             }}>
               {PHONE_LABEL}
             </span>
-            <span style={{
-              fontSize: `${PHONE_NUMBER_SIZE}px`,
-              fontWeight: PHONE_NUMBER_WEIGHT,
-              color: PHONE_NUMBER_COLOR,
-              transform: `translate(${PHONE_NUMBER_X}px, ${PHONE_NUMBER_Y}px)`
-            }}>
+            <span
+              ref={phoneNumberRef}
+              style={{
+                fontSize: `${PHONE_NUMBER_SIZE}px`,
+                fontWeight: PHONE_NUMBER_WEIGHT,
+                color: PHONE_BLINK_COLOR,
+                transform: `translate(${PHONE_NUMBER_X}px, ${PHONE_NUMBER_Y}px)`
+              }}
+            >
               {PHONE_NUMBER}
             </span>
           </div>
