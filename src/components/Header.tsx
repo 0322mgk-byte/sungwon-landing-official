@@ -6,6 +6,7 @@ import Image from "next/image"
 import { Phone, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
+import { usePathname } from "next/navigation"
 
 // ============================================
 // 🎨 헤더 설정
@@ -15,6 +16,10 @@ import { useState } from "react"
 const HEADER_HEIGHT = 80;                    // 헤더 높이 (px)
 const HEADER_BG = "rgba(0,0,0,0.1)";         // 배경색 - rgba(R,G,B,투명도 0~1) | 예: rgba(0,0,0,0.1) = 검정 10% 불투명
 const HEADER_HOVER_BG = "rgba(255,255,255,1)"; // 호버 시 배경색 - rgba(R,G,B,투명도 0~1)
+const HEADER_SCROLL_BG = "rgba(255,255,255,1)"; // 서브페이지 스크롤 시 배경색 - rgba(R,G,B,투명도 0~1)
+const HEADER_SCROLL_THRESHOLD = 50;          // 스크롤 감지 임계값 (px) - 이 값 이상 스크롤하면 배경 변경
+const HEADER_SCROLL_BORDER_COLOR = "rgba(230,230,230,1)"; // 서브페이지 스크롤 시 하단 테두리 색상 - rgba(R,G,B,투명도 0~1)
+const HEADER_SCROLL_BORDER_WIDTH = 1;        // 서브페이지 스크롤 시 하단 테두리 두께 (px)
 const HEADER_PADDING_X = 20;                 // 좌우 패딩 (px)
 
 // 애니메이션 설정
@@ -85,7 +90,7 @@ const NAV_ITEMS = [
 // 🔽 드롭다운 메뉴 설정
 // ============================================
 const DROPDOWN_ENABLED = true;                        // 드롭다운 메뉴 사용 여부
-const DROPDOWN_BG = "rgba(255,255,255,1)";            // 드롭다운 배경색
+const DROPDOWN_BG = "rgba(245,245,245,1)";            // 드롭다운 배경색 - rgba(R,G,B,투명도 0~1)
 const DROPDOWN_HEIGHT = 180;                          // 드롭다운 높이 (px)
 const DROPDOWN_BORDER_COLOR = "rgba(230,230,230,1)";  // 드롭다운 테두리 색상
 const DROPDOWN_ANIM_DURATION = 0.3;                   // 드롭다운 애니메이션 시간 (초)
@@ -104,6 +109,8 @@ const DROPDOWN_ITEM_PADDING_Y = 6;                    // 서브메뉴 항목 상
 
 // 드롭다운 컬럼 설정
 const DROPDOWN_COLUMN_MIN_WIDTH = 100;                // 컬럼 최소 너비 (px) - 자간/여백에 따라 자동 확장
+const DROPDOWN_DIVIDER_COLOR = "rgba(230,230,230,1)"; // 컬럼 구분선 색상
+const DROPDOWN_DIVIDER_WIDTH = 1;                     // 컬럼 구분선 두께 (px)
 
 // 네비게이션 스타일
 const NAV_FONT_SIZE = 15;                    // 글자 크기 (px)
@@ -165,6 +172,9 @@ export default function Header() {
   const phoneIconRef = useRef(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+  const pathname = usePathname()
+  const isHomePage = pathname === "/"
 
   useEffect(() => {
     if (ANIM_ENABLED && headerRef.current) {
@@ -176,6 +186,20 @@ export default function Header() {
       })
     }
   }, [])
+
+  // 서브페이지에서 스크롤 감지
+  useEffect(() => {
+    if (isHomePage) return // 홈에서는 스크롤 감지 안함
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > HEADER_SCROLL_THRESHOLD)
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    handleScroll() // 초기 상태 확인
+
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [isHomePage])
 
   // 전화번호 깜빡임 애니메이션
   useEffect(() => {
@@ -192,11 +216,30 @@ export default function Header() {
     }
   }, [])
 
+  // 배경색 결정: 호버 > 스크롤(서브페이지) > 기본
+  const getHeaderBg = () => {
+    if (isHovered) return HEADER_HOVER_BG
+    if (!isHomePage && isScrolled) return HEADER_SCROLL_BG
+    return HEADER_BG
+  }
+
+  // 하단 테두리 결정: 서브페이지 스크롤 시에만 표시
+  const getHeaderBorder = () => {
+    if (!isHomePage && isScrolled) {
+      return `${HEADER_SCROLL_BORDER_WIDTH}px solid ${HEADER_SCROLL_BORDER_COLOR}`
+    }
+    return `${HEADER_SCROLL_BORDER_WIDTH}px solid transparent`
+  }
+
   return (
     <header
       ref={headerRef}
-      className="fixed top-0 w-full z-50 transition-colors duration-300"
-      style={{ height: `${HEADER_HEIGHT}px`, backgroundColor: isHovered ? HEADER_HOVER_BG : HEADER_BG }}
+      className="fixed top-0 w-full z-50"
+      style={{
+        height: `${HEADER_HEIGHT}px`,
+        backgroundColor: getHeaderBg(),
+        borderBottom: getHeaderBorder()
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -352,9 +395,33 @@ export default function Header() {
             {NAV_ITEMS.map((item, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center"
-                style={{ minWidth: `${DROPDOWN_COLUMN_MIN_WIDTH}px` }}
+                className="relative flex flex-col items-center"
+                style={{ width: `${NAV_ITEM_WIDTH}px` }}
               >
+                {/* 컬럼 왼쪽 구분선 */}
+                <div
+                  className="absolute"
+                  style={{
+                    top: `-${DROPDOWN_PADDING_TOP}px`,
+                    left: `-${NAV_GAP / 2}px`,
+                    width: `${DROPDOWN_DIVIDER_WIDTH}px`,
+                    backgroundColor: DROPDOWN_DIVIDER_COLOR,
+                    height: `${DROPDOWN_HEIGHT}px`,
+                  }}
+                />
+                {/* 마지막 컬럼 오른쪽 구분선 */}
+                {index === NAV_ITEMS.length - 1 && (
+                  <div
+                    className="absolute"
+                    style={{
+                      top: `-${DROPDOWN_PADDING_TOP}px`,
+                      right: `-${NAV_GAP / 2}px`,
+                      width: `${DROPDOWN_DIVIDER_WIDTH}px`,
+                      backgroundColor: DROPDOWN_DIVIDER_COLOR,
+                      height: `${DROPDOWN_HEIGHT}px`,
+                    }}
+                  />
+                )}
                 {/* 서브메뉴 항목들 */}
                 <div className="flex flex-col items-center" style={{ gap: `${DROPDOWN_ITEM_GAP}px` }}>
                   {item.subItems.map((subItem, subIndex) => (
