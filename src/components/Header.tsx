@@ -22,11 +22,6 @@ const HEADER_SCROLL_BORDER_COLOR = "rgba(230,230,230,1)"; // 서브페이지 스
 const HEADER_SCROLL_BORDER_WIDTH = 1;        // 서브페이지 스크롤 시 하단 테두리 두께 (px)
 const HEADER_PADDING_X = 20;                 // 좌우 패딩 (px)
 
-// 애니메이션 설정
-const ANIM_ENABLED = true;                   // 진입 애니메이션 사용 여부
-const ANIM_DURATION = 1;                     // 애니메이션 시간 (초)
-const ANIM_EASE = "power3.inOut";            // 이징 - power1~4 + .in(천천히시작) / .out(천천히끝) / .inOut(양쪽천천히)
-
 // ============================================
 // 🖼️ 좌측 그룹 설정 (로고)
 // ============================================
@@ -51,9 +46,11 @@ const NAV_GAP = 100;                          // 메뉴 사이 간격 (px)
 // 네비게이션 메뉴 항목 (서브메뉴 포함)
 const NAV_ITEMS = [
   {
-    label: "사업개요",
+    label: "사업안내",
     href: "/business",
-    subItems: []
+    subItems: [
+      { label: "사업개요", href: "/business" },
+    ]
   },
   {
     label: "입지환경",
@@ -175,17 +172,6 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
   const isHomePage = pathname === "/"
-
-  useEffect(() => {
-    if (ANIM_ENABLED && headerRef.current) {
-      gsap.from(headerRef.current, {
-        y: -100,
-        opacity: 0,
-        duration: ANIM_DURATION,
-        ease: ANIM_EASE
-      })
-    }
-  }, [])
 
   // 서브페이지에서 스크롤 감지
   useEffect(() => {

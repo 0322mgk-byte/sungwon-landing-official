@@ -1,5 +1,7 @@
 "use client"
 
+import { useEffect, useRef } from "react"
+import { gsap } from "gsap"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import Image from "next/image"
@@ -9,6 +11,15 @@ import Image from "next/image"
 // ============================================
 const SECTION_BG = "rgba(255,255,255,1)"     // 배경색 - rgba(R,G,B,투명도 0~1)
 const SECTION_PADDING_BOTTOM = 80;           // 섹션 하단 여백 (px)
+
+// ============================================
+// 🎬 콘텐츠 진입 애니메이션 설정
+// ============================================
+const ANIM_ENABLED = true;                   // 애니메이션 사용 여부
+const ANIM_DURATION = 1;                     // 애니메이션 시간 (초)
+const ANIM_EASE = "power2.out";              // 이징 - power1~4 + .in(천천히시작) / .out(천천히끝) / .inOut(양쪽천천히)
+const ANIM_Y_OFFSET = 20;                    // 시작 위치 Y 오프셋 (px) - 아래에서 위로 올라오는 거리
+const ANIM_DELAY = 0;                      // 애니메이션 시작 지연 (초)
 
 // ============================================
 // 📦 콘텐츠 컨테이너 설정
@@ -93,6 +104,28 @@ const getItemsAlign = (align: string) => {
 };
 
 export default function BusinessPage() {
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  // 콘텐츠 진입 애니메이션
+  useEffect(() => {
+    if (ANIM_ENABLED && contentRef.current) {
+      gsap.fromTo(
+        contentRef.current,
+        {
+          y: ANIM_Y_OFFSET,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: ANIM_DURATION,
+          ease: ANIM_EASE,
+          delay: ANIM_DELAY,
+        }
+      )
+    }
+  }, [])
+
   return (
     <main className="min-h-screen font-sans flex flex-col" style={{ backgroundColor: SECTION_BG }}>
       <Header />
@@ -108,12 +141,14 @@ export default function BusinessPage() {
       >
         {/* 콘텐츠 컨테이너 - 모든 요소가 이 안에 배치됨 */}
         <div
+          ref={contentRef}
           className="w-full flex flex-col items-center"
           style={{
             maxWidth: `${CONTENT_MAX_WIDTH}px`,
             paddingLeft: `${CONTENT_PADDING_X}px`,
             paddingRight: `${CONTENT_PADDING_X}px`,
             gap: `${CONTENT_GAP}px`,
+            opacity: ANIM_ENABLED ? 0 : 1,
           }}
         >
           {/* 타이틀 그룹 */}
