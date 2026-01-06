@@ -61,9 +61,9 @@ const NAV_ITEMS = [
   },
   {
     label: "단지안내",
-    href: "/complex",
+    href: "/complex/site-plan",
     subItems: [
-      { label: "단지배치도", href: "/complex/layout" },
+      { label: "단지배치도", href: "/complex/site-plan" },
       { label: "동호수배치도", href: "/complex/unit-layout" },
       { label: "커뮤니티", href: "/complex/community" },
     ]

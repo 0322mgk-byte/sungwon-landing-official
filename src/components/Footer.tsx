@@ -271,6 +271,19 @@ export default function Footer() {
               </a>
             ))}
           </div>
+
+          {/* 로그인 */}
+          <a
+            href="/login"
+            className="hover:opacity-70 transition-opacity cursor-pointer"
+            style={{
+              fontSize: '14px',
+              color: 'rgba(150,150,150,1)',
+              marginTop: '8px',
+            }}
+          >
+            로그인
+          </a>
         </div>
 
       </div>

@@ -10,7 +10,13 @@
       "Bash(taskkill /F /PID 45164)",
       "Bash(powershell -Command:*)",
       "Bash(git clone:*)",
-      "Bash(xcopy:*)"
+      "Bash(xcopy:*)",
+      "Bash(taskkill:*)",
+      "Bash(tree:*)",
+      "Bash(cat:*)",
+      "Bash(findstr:*)",
+      "Bash(if exist .next rmdir /s /q .next)",
+      "Bash(netstat:*)"
     ]
   }
 }
