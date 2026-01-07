@@ -4,44 +4,25 @@ import { useEffect, useRef } from "react"
 import { gsap } from "gsap"
 import Image from "next/image"
 
-// ============================================
-// 🎯 히어로 미디어 설정
-// ============================================
-// "video" 또는 "image" 중 선택
-const HERO_TYPE: "video" | "image" = "video"
-
-// 미디어 파일 경로
-const VIDEO_SRC = "/hero-section-video.mp4"
-const IMAGE_SRC = "/pickso-batang.png"
-
-// ============================================
-// 🎬 영상 조절 설정 (HERO_TYPE = "video" 일 때)
-// ============================================
-const VIDEO_SCALE = 132    // 확대/축소 (%) - 100 = 원본 크기
-const VIDEO_X = 0        // 좌우 이동 (%) - 음수: 왼쪽, 양수: 오른쪽
-const VIDEO_Y = -10        // 상하 이동 (%) - 음수: 위로, 양수: 아래로
-
-// ============================================
-// 🖼️ 이미지 조절 설정 (HERO_TYPE = "image" 일 때)
-// ============================================
-// 최종 위치 (애니메이션 끝점 = 원점)
-const IMAGE_SCALE = 120    // 확대/축소 (%) - 100 = 원본 크기
-const IMAGE_X = 0          // 좌우 이동 (%) - 음수: 왼쪽, 양수: 오른쪽
-const IMAGE_Y = 2         // 상하 이동 (%) - 음수: 위로, 양수: 아래로
-
-// 애니메이션 시작점 (처음 보이는 상태)
-const IMAGE_START_SCALE = 150   // 시작 확대/축소 (%)
-const IMAGE_START_X = 0         // 시작 좌우 이동 (%)
-const IMAGE_START_Y = -8       // 시작 상하 이동 (%)
-
-// 애니메이션 설정
-const IMAGE_ANIM_DURATION = 3   // 애니메이션 시간 (초)
-const IMAGE_ANIM_EASE = "power3.inOut"  // 이징: power1~4 + .in / .out / .inOut
-
-// 히어로 섹션 레이아웃
-const HERO_HEIGHT = "90vh"      // 히어로 섹션 높이
-const HERO_BG = "rgba(0,0,0,1)" // 배경색 - rgba(R,G,B,투명도 0~1)
-// ============================================
+// 설정값 import (Hero.config.ts에서 값 수정 가능)
+import {
+  HERO_TYPE,
+  VIDEO_SRC,
+  IMAGE_SRC,
+  HERO_HEIGHT,
+  HERO_BG,
+  VIDEO_SCALE,
+  VIDEO_X,
+  VIDEO_Y,
+  IMAGE_SCALE,
+  IMAGE_X,
+  IMAGE_Y,
+  IMAGE_START_SCALE,
+  IMAGE_START_X,
+  IMAGE_START_Y,
+  IMAGE_ANIM_DURATION,
+  IMAGE_ANIM_EASE,
+} from "./Hero.config"
 
 export default function Hero() {
   const heroRef = useRef(null)

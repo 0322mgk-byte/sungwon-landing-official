@@ -3,20 +3,15 @@
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 
-// ============================================
-// 🏠 세대안내 페이지 설정
-// ============================================
-const SECTION_BG = "rgba(255,255,255,1)"     // 배경색 - rgba(R,G,B,투명도 0~1)
-const SECTION_PADDING_TOP = 150;             // 헤더 아래 여백 (px)
-const SECTION_PADDING_BOTTOM = 80;           // 섹션 하단 여백 (px)
-
-// ============================================
-// 📦 콘텐츠 컨테이너 설정
-// ============================================
-const CONTENT_MAX_WIDTH = 800;               // 콘텐츠 최대 너비 (px)
-const CONTENT_PADDING_X = 20;                // 좌우 여백 (px)
-const CONTENT_GAP = 40;                      // 콘텐츠 요소 간 세로 간격 (px)
-// ============================================
+// 설정값 import (config.ts에서 값 수정 가능)
+import {
+  SECTION_BG,
+  SECTION_PADDING_TOP,
+  SECTION_PADDING_BOTTOM,
+  CONTENT_MAX_WIDTH,
+  CONTENT_PADDING_X,
+  CONTENT_GAP,
+} from "./config"
 
 export default function UnitPage() {
   return (

@@ -6,82 +6,45 @@ import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import Image from "next/image"
 
-// ============================================
-// 🏢 인테리어 페이지 설정
-// ============================================
-const SECTION_BG = "rgba(255,255,255,1)"     // 배경색 - rgba(R,G,B,투명도 0~1)
-const SECTION_PADDING_BOTTOM = 80;           // 섹션 하단 여백 (px)
-
-// ============================================
-// 🎬 콘텐츠 진입 애니메이션 설정
-// ============================================
-const ANIM_ENABLED = true;                   // 애니메이션 사용 여부
-const ANIM_DURATION = 1;                     // 애니메이션 시간 (초)
-const ANIM_EASE = "power2.out";              // 이징 - power1~4 + .in(천천히시작) / .out(천천히끝) / .inOut(양쪽천천히)
-const ANIM_Y_OFFSET = 20;                    // 시작 위치 Y 오프셋 (px) - 아래에서 위로 올라오는 거리
-const ANIM_DELAY = 0;                        // 애니메이션 시작 지연 (초)
-
-// ============================================
-// 📦 콘텐츠 컨테이너 설정
-// ============================================
-const CONTENT_MAX_WIDTH = 600;               // 콘텐츠 최대 너비 (px)
-const CONTENT_PADDING_X = 20;                // 좌우 여백 (px)
-const CONTENT_GAP = 40;                      // 콘텐츠 요소 간 세로 간격 (px)
-
-// ============================================
-// 📝 타이틀 그룹 설정 (메인카피 + 서브카피)
-// ============================================
-const TITLE_GROUP_ENABLED = true;            // 타이틀 그룹 사용 여부
-const TITLE_GROUP_X = 0;                     // 그룹 좌우 위치 (px) - 음수: 왼쪽, 양수: 오른쪽
-const TITLE_GROUP_Y = 0;                     // 그룹 상하 위치 (px) - 음수: 위로, 양수: 아래로
-const TITLE_GROUP_PADDING_TOP = 150;         // 헤더 아래 여백 (px)
-const TITLE_GROUP_ALIGN = "center";          // 정렬 - "left", "center", "right"
-
-// 메인 카피 설정
-const MAIN_COPY_ENABLED = true;              // 메인 카피 사용 여부
-const MAIN_COPY = "인테리어";                  // 메인 카피 텍스트
-const MAIN_COPY_SIZE = 45;                   // 글자 크기 (px)
-const MAIN_COPY_WEIGHT = 800;                // 글자 굵기 - 100~900
-const MAIN_COPY_COLOR = "rgba(0,28,61,1)";   // 글자 색상 - rgba(R,G,B,투명도 0~1)
-const MAIN_COPY_LETTER_SPACING = 0;          // 자간 (px)
-const MAIN_COPY_LINE_HEIGHT = 1.2;           // 줄 높이 - 1.0=글자크기, 1.5=1.5배
-const MAIN_COPY_X = 0;                       // 좌우 미세 조정 (px)
-const MAIN_COPY_Y = 0;                       // 상하 미세 조정 (px)
-
-// 서브 카피 설정
-const SUB_COPY_ENABLED = true;               // 서브 카피 사용 여부
-const SUB_COPY = "세련된 디자인과 실용성을 갖춘 프리미엄 인테리어";  // 서브 카피 텍스트
-const SUB_COPY_SIZE = 20;                    // 글자 크기 (px)
-const SUB_COPY_WEIGHT = 400;                 // 글자 굵기 - 100~900
-const SUB_COPY_COLOR = "rgba(100,100,100,1)"; // 글자 색상 - rgba(R,G,B,투명도 0~1)
-const SUB_COPY_LETTER_SPACING = 0;           // 자간 (px)
-const SUB_COPY_LINE_HEIGHT = 1.5;            // 줄 높이 - 1.0=글자크기, 1.5=1.5배
-const SUB_COPY_X = 0;                        // 좌우 미세 조정 (px)
-const SUB_COPY_Y = 0;                        // 상하 미세 조정 (px)
-
-// 메인/서브 카피 간격
-const COPY_GAP = 16;                         // 메인 ↔ 서브 카피 간격 (px)
-
-// ============================================
-// 🖼️ 인테리어 이미지 설정
-// ============================================
-const INTERIOR_IMAGES = [
-  "/1.jpg",
-  "/2.jpg",
-  "/3.jpg",
-  "/4.png",
-  "/5.jpg",
-  "/6.jpg",
-  "/7.jpg",
-  "/8.jpg",
-  "/10.jpg",
-  "/11.jpg",
-  "/12.jpg",
-  "/13.jpg",
-];
-const IMAGE_GAP = 20;                        // 이미지 간격 (px)
-
-// ============================================
+// 설정값 import (config.ts에서 값 수정 가능)
+import {
+  SECTION_BG,
+  SECTION_PADDING_BOTTOM,
+  ANIM_ENABLED,
+  ANIM_DURATION,
+  ANIM_EASE,
+  ANIM_Y_OFFSET,
+  ANIM_DELAY,
+  CONTENT_MAX_WIDTH,
+  CONTENT_PADDING_X,
+  CONTENT_GAP,
+  TITLE_GROUP_ENABLED,
+  TITLE_GROUP_X,
+  TITLE_GROUP_Y,
+  TITLE_GROUP_PADDING_TOP,
+  TITLE_GROUP_ALIGN,
+  MAIN_COPY_ENABLED,
+  MAIN_COPY,
+  MAIN_COPY_SIZE,
+  MAIN_COPY_WEIGHT,
+  MAIN_COPY_COLOR,
+  MAIN_COPY_LETTER_SPACING,
+  MAIN_COPY_LINE_HEIGHT,
+  MAIN_COPY_X,
+  MAIN_COPY_Y,
+  SUB_COPY_ENABLED,
+  SUB_COPY,
+  SUB_COPY_SIZE,
+  SUB_COPY_WEIGHT,
+  SUB_COPY_COLOR,
+  SUB_COPY_LETTER_SPACING,
+  SUB_COPY_LINE_HEIGHT,
+  SUB_COPY_X,
+  SUB_COPY_Y,
+  COPY_GAP,
+  INTERIOR_IMAGES,
+  IMAGE_GAP,
+} from "./config"
 
 // 정렬 헬퍼 함수
 const getTextAlign = (align: string) => {
@@ -188,9 +151,7 @@ export default function InteriorPage() {
             </div>
           )}
 
-          {/* ================================================
-              📌 인테리어 이미지 영역
-              ================================================ */}
+          {/* 인테리어 이미지 영역 */}
           <div className="w-full flex flex-col" style={{ gap: `${IMAGE_GAP}px` }}>
             {INTERIOR_IMAGES.map((src, index) => (
               <Image

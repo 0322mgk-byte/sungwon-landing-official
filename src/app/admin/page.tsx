@@ -1,73 +1,23 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Users, TrendingUp, Calendar, Globe, Monitor, Smartphone, Search, Share2, MessageCircle, RefreshCw, MapPin, Clock } from "lucide-react"
+import { Users, TrendingUp, Calendar, Globe, Monitor, Smartphone, RefreshCw, MapPin, Clock } from "lucide-react"
 
-// ============================================
-// 📊 관리자 대시보드 설정
-// ============================================
-const ADMIN_BG = "rgba(245,247,250,1)"
-const CARD_BG = "rgba(255,255,255,1)"
-const CARD_BORDER_RADIUS = 12
-const CARD_SHADOW = "0 2px 8px rgba(0,0,0,0.08)"
-
-const PRIMARY_COLOR = "rgba(0,28,61,1)"
-const ACCENT_COLOR = "rgba(65,105,225,1)"
-const TEXT_COLOR = "rgba(50,50,50,1)"
-const TEXT_LIGHT = "rgba(120,120,120,1)"
-
-// 유입 경로 아이콘 매핑
-const REFERRER_ICONS: Record<string, typeof Globe> = {
-  '직접 유입': Globe,
-  '네이버': Search,
-  '구글': Search,
-  '카카오': MessageCircle,
-  '당근마켓': Share2,
-  '인스타그램': Share2,
-  '기타': TrendingUp,
-}
-
-const REFERRER_COLORS: Record<string, string> = {
-  '직접 유입': 'rgba(65,105,225,1)',
-  '네이버': 'rgba(0,200,83,1)',
-  '구글': 'rgba(66,133,244,1)',
-  '카카오': 'rgba(250,225,0,1)',
-  '당근마켓': 'rgba(255,126,51,1)',
-  '인스타그램': 'rgba(225,48,108,1)',
-  '기타': 'rgba(150,150,150,1)',
-}
-
-// 페이지 이름 매핑
-const PAGE_NAMES: Record<string, string> = {
-  '/': '메인 페이지',
-  '/location': '입지환경',
-  '/premium': '프리미엄',
-  '/complex/site-plan': '단지배치도',
-  '/complex/unit-layout': '동호수배치도',
-  '/complex/community': '커뮤니티',
-  '/unit/type': '타입안내',
-  '/unit/interior': '인테리어',
-  '/reservation': '방문예약',
-}
-
-// ============================================
-// 📈 통계 데이터 타입
-// ============================================
-interface StatsData {
-  visitors: {
-    daily: number
-    weekly: number
-    monthly: number
-    total: number
-  }
-  referrers: { name: string; value: number; count: number }[]
-  devices: { mobile: number; desktop: number }
-  regions: { name: string; count: number }[]
-  pages: { page: string; visits: number; avgDuration: number }[]
-  dailyTrend: { date: string; count: number }[]
-}
-
-// ============================================
+// 설정값 import (config.ts에서 값 수정 가능)
+import {
+  ADMIN_BG,
+  CARD_BG,
+  CARD_BORDER_RADIUS,
+  CARD_SHADOW,
+  PRIMARY_COLOR,
+  ACCENT_COLOR,
+  TEXT_COLOR,
+  TEXT_LIGHT,
+  REFERRER_ICONS,
+  REFERRER_COLORS,
+  PAGE_NAMES,
+  StatsData,
+} from "./config"
 
 export default function AdminPage() {
   const [currentTime, setCurrentTime] = useState<Date | null>(null)

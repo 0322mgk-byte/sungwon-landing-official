@@ -5,162 +5,84 @@ import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import Image from "next/image"
 
-// ============================================
-// 📅 방문예약 페이지 설정
-// ============================================
-const SECTION_BG = "rgba(255,255,255,1)"     // 배경색 - rgba(R,G,B,투명도 0~1)
-const SECTION_PADDING_TOP = 80;              // 헤더 아래 여백 (px) - 헤더 높이만큼
-const SECTION_PADDING_BOTTOM = 80;           // 섹션 하단 여백 (px)
-
-// ============================================
-// 📦 콘텐츠 컨테이너 설정
-// ============================================
-const CONTENT_MAX_WIDTH = 880;              // 콘텐츠 최대 너비 (px)
-const CONTENT_PADDING_X = 20;                // 좌우 여백 (px)
-const CONTENT_GAP = 40;                      // 콘텐츠 요소 간 세로 간격 (px)
-
-// ============================================
-// 🖼️ 방문예약 이미지 설정
-// ============================================
-const RESERVATION_IMAGES = [
-  "/01.png",
-  "/02-2.png",
-];
-const IMAGE_GAP = 0;                         // 이미지 간격 (px) - 0으로 설정하여 붙임
-
-// ============================================
-// 📝 리드폼 레이아웃 설정
-// ============================================
-const FORM_MAX_WIDTH = 900;                  // 폼 최대 너비 (px)
-const FORM_PADDING_X = 40;                   // 폼 좌우 여백 (px)
-const FORM_PADDING_Y = 50;                   // 폼 상하 여백 (px)
-const FORM_BG = "rgba(255,255,255,1)";       // 폼 배경색
-const FORM_BORDER_RADIUS = 12;               // 폼 모서리 둥글기 (px)
-const FORM_ITEM_GAP = 40;                    // 폼 항목 간 세로 간격 (px)
-
-// ============================================
-// 🎨 리드폼 색상 설정
-// ============================================
-const PRIMARY_COLOR = "rgba(59,130,246,1)";  // 메인 컬러 (파란색)
-const PRIMARY_HOVER_BG = "rgba(59,130,246,0.05)"; // 선택된 항목 배경색
-const LABEL_COLOR = "rgba(30,30,30,1)";      // 라벨 색상
-const SUB_TEXT_COLOR = "rgba(100,100,100,1)"; // 서브 텍스트 색상
-const INPUT_BORDER_COLOR = "rgba(220,220,220,1)"; // 입력 필드 테두리 색상
-const INPUT_FOCUS_BORDER_COLOR = "rgba(59,130,246,1)"; // 포커스 시 테두리 색상
-const PRIVACY_BG_COLOR = "rgba(245,245,245,1)"; // 개인정보 박스 배경색
-
-// ============================================
-// ✏️ 리드폼 타이틀 설정
-// ============================================
-const FORM_TITLE = "빠른 상담 예약";           // 폼 메인 타이틀
-const FORM_TITLE_SIZE = 40;                  // 타이틀 글자 크기 (px)
-const FORM_TITLE_WEIGHT = 700;               // 타이틀 글자 굵기 - 100~900
-const FORM_TITLE_MARGIN_BOTTOM = 8;          // 타이틀 하단 여백 (px)
-
-const FORM_SUBTITLE = "원하시는 시간에 맞춰 담당자가 연락드립니다"; // 서브타이틀
-const FORM_SUBTITLE_SIZE = 20;               // 서브타이틀 글자 크기 (px)
-const FORM_SUBTITLE_WEIGHT = 400;            // 서브타이틀 글자 굵기 - 100~900
-const FORM_HEADER_MARGIN_BOTTOM = 32;        // 타이틀 영역 하단 여백 (px)
-
-// ============================================
-// 🏷️ 리드폼 라벨 설정
-// ============================================
-const LABEL_FONT_SIZE = 17;                  // 라벨 글자 크기 (px)
-const LABEL_FONT_WEIGHT = 500;               // 라벨 글자 굵기 - 100~900
-const LABEL_MARGIN_BOTTOM = 12;              // 라벨 하단 여백 (px)
-
-// ============================================
-// 📦 리드폼 공통 패딩 설정 (입력필드, 옵션버튼, 제출버튼 전체 적용)
-// ============================================
-const FIELD_PADDING_X = 16;                  // 전체 필드 좌우 패딩 (px)
-const FIELD_PADDING_Y = 16;                  // 전체 필드 상하 패딩 (px)
-const FIELD_BORDER_RADIUS = 8;               // 전체 필드 모서리 둥글기 (px)
-
-// ============================================
-// 📥 리드폼 입력 필드 설정
-// ============================================
-const INPUT_FONT_SIZE = 15;                  // 입력 필드 글자 크기 (px)
-
-// ============================================
-// 🔘 리드폼 버튼/옵션 설정
-// ============================================
-const OPTION_FONT_SIZE = 14;                 // 옵션 버튼 글자 크기 (px)
-const OPTION_FONT_WEIGHT_NORMAL = 400;       // 옵션 일반 글자 굵기 - 100~900
-const OPTION_FONT_WEIGHT_SELECTED = 500;     // 옵션 선택 시 글자 굵기 - 100~900
-const OPTION_GAP = 8;                        // 옵션 간 간격 (px)
-const AGE_BUTTON_GAP = 12;                   // 연령대 버튼 간 간격 (px)
-
-// ============================================
-// ✅ 리드폼 체크박스/개인정보 설정
-// ============================================
-const CHECKBOX_SIZE = 20;                    // 체크박스 크기 (px)
-const CHECKBOX_LABEL_SIZE = 14;              // 체크박스 라벨 글자 크기 (px)
-const PRIVACY_TEXT_SIZE = 12;                // 개인정보 안내문 글자 크기 (px)
-const PRIVACY_LINE_HEIGHT = 1.6;             // 개인정보 안내문 줄 높이
-const PRIVACY_PADDING = 12;                  // 개인정보 박스 패딩 (px)
-
-// ============================================
-// 🚀 리드폼 제출 버튼 설정
-// ============================================
-const SUBMIT_BUTTON_TEXT = "상담 예약하기";   // 제출 버튼 텍스트
-const SUBMIT_BUTTON_FONT_SIZE = 16;          // 제출 버튼 글자 크기 (px)
-const SUBMIT_BUTTON_FONT_WEIGHT = 700;       // 제출 버튼 글자 굵기 - 100~900
-// ============================================
-
-// 연령대 옵션
-const AGE_OPTIONS = ["20~30대", "40~50대", "60대 이상"];
-
-// 통화 가능 시간 옵션
-const TIME_OPTIONS = [
-  { value: "anytime", label: "가장 빠른 안내 (상관없음)", checked: true },
-  { value: "morning", label: "오전 9-12시", checked: false },
-  { value: "afternoon", label: "오후 12-6시", checked: false },
-  { value: "evening", label: "저녁 6시 이후", checked: false },
-];
-
-// 선물 옵션
-const GIFT_OPTIONS = [
-  { value: "vacuum", label: "삼성 비스포크 무선 청소기" },
-  { value: "airpurifier", label: "삼성 공기청정기 + 스마트TV" },
-  { value: "jeju", label: "제주도 3박 4일 여행권" },
-];
-
-// Apps Script 웹 앱 URL
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTjpGH_GZ-2xTDG1x7-SwtBBPyXDMB_ylqKM4Jbf4DZGsz9R_WAnVMuD7G3uKmNw_UEg/exec";
-
-// ============================================
-// 🎉 성공 팝업 설정
-// ============================================
-const POPUP_BG = "rgba(255,255,255,1)";           // 팝업 배경색
-const POPUP_BORDER_RADIUS = 16;                   // 팝업 모서리 둥글기 (px)
-const POPUP_PADDING = 40;                         // 팝업 패딩 (px)
-const POPUP_MAX_WIDTH = 360;                      // 팝업 최대 너비 (px)
-
-const POPUP_ICON_SIZE = 60;                       // 체크 아이콘 크기 (px)
-const POPUP_ICON_BG = "rgba(59,130,246,1)";       // 체크 아이콘 배경색
-const POPUP_ICON_COLOR = "white";                 // 체크 아이콘 색상
-
-const POPUP_TITLE = "상담 신청이 완료되었습니다!";   // 팝업 타이틀
-const POPUP_TITLE_SIZE = 22;                      // 팝업 타이틀 크기 (px)
-const POPUP_TITLE_WEIGHT = 700;                   // 팝업 타이틀 굵기
-
-const POPUP_MESSAGE = "빠른 시간 내에 연락드리겠습니다."; // 팝업 메시지
-const POPUP_MESSAGE_SIZE = 15;                    // 팝업 메시지 크기 (px)
-const POPUP_MESSAGE_COLOR = "rgba(100,100,100,1)"; // 팝업 메시지 색상
-
-const POPUP_BUTTON_TEXT = "확인";                  // 팝업 버튼 텍스트
-const POPUP_BUTTON_WIDTH = 120;                   // 팝업 버튼 너비 (px)
-
-// ============================================
-// 💬 카카오톡 플로팅 버튼 설정
-// ============================================
-const KAKAO_ENABLED = true;                       // 카카오톡 버튼 사용 여부
-const KAKAO_URL = "https://open.kakao.com/o/sYpCdW6h";  // 카카오톡 오픈채팅 URL (변경 필요)
-const KAKAO_SIZE = 60;                            // 버튼 크기 (px)
-const KAKAO_BOTTOM = 30;                          // 하단 여백 (px)
-const KAKAO_RIGHT = 30;                           // 우측 여백 (px)
-const KAKAO_BG = "#FEE500";                        // 카카오 노란색 배경
-const KAKAO_SHADOW = "0 4px 12px rgba(0,0,0,0.15)"; // 그림자 효과
+// 설정값 import (config.ts에서 값 수정 가능)
+import {
+  SECTION_BG,
+  SECTION_PADDING_TOP,
+  SECTION_PADDING_BOTTOM,
+  CONTENT_MAX_WIDTH,
+  CONTENT_PADDING_X,
+  CONTENT_GAP,
+  RESERVATION_IMAGES,
+  IMAGE_GAP,
+  FORM_MAX_WIDTH,
+  FORM_PADDING_X,
+  FORM_PADDING_Y,
+  FORM_BG,
+  FORM_BORDER_RADIUS,
+  FORM_ITEM_GAP,
+  PRIMARY_COLOR,
+  PRIMARY_HOVER_BG,
+  LABEL_COLOR,
+  SUB_TEXT_COLOR,
+  INPUT_BORDER_COLOR,
+  INPUT_FOCUS_BORDER_COLOR,
+  PRIVACY_BG_COLOR,
+  FORM_TITLE,
+  FORM_TITLE_SIZE,
+  FORM_TITLE_WEIGHT,
+  FORM_TITLE_MARGIN_BOTTOM,
+  FORM_SUBTITLE,
+  FORM_SUBTITLE_SIZE,
+  FORM_SUBTITLE_WEIGHT,
+  FORM_HEADER_MARGIN_BOTTOM,
+  LABEL_FONT_SIZE,
+  LABEL_FONT_WEIGHT,
+  LABEL_MARGIN_BOTTOM,
+  FIELD_PADDING_X,
+  FIELD_PADDING_Y,
+  FIELD_BORDER_RADIUS,
+  INPUT_FONT_SIZE,
+  OPTION_FONT_SIZE,
+  OPTION_FONT_WEIGHT_NORMAL,
+  OPTION_FONT_WEIGHT_SELECTED,
+  OPTION_GAP,
+  AGE_BUTTON_GAP,
+  CHECKBOX_SIZE,
+  CHECKBOX_LABEL_SIZE,
+  PRIVACY_TEXT_SIZE,
+  PRIVACY_LINE_HEIGHT,
+  PRIVACY_PADDING,
+  SUBMIT_BUTTON_TEXT,
+  SUBMIT_BUTTON_FONT_SIZE,
+  SUBMIT_BUTTON_FONT_WEIGHT,
+  AGE_OPTIONS,
+  TIME_OPTIONS,
+  GIFT_OPTIONS,
+  APPS_SCRIPT_URL,
+  POPUP_BG,
+  POPUP_BORDER_RADIUS,
+  POPUP_PADDING,
+  POPUP_MAX_WIDTH,
+  POPUP_ICON_SIZE,
+  POPUP_ICON_BG,
+  POPUP_ICON_COLOR,
+  POPUP_TITLE,
+  POPUP_TITLE_SIZE,
+  POPUP_TITLE_WEIGHT,
+  POPUP_MESSAGE,
+  POPUP_MESSAGE_SIZE,
+  POPUP_MESSAGE_COLOR,
+  POPUP_BUTTON_TEXT,
+  POPUP_BUTTON_WIDTH,
+  KAKAO_ENABLED,
+  KAKAO_URL,
+  KAKAO_SIZE,
+  KAKAO_BOTTOM,
+  KAKAO_RIGHT,
+  KAKAO_BG,
+  KAKAO_SHADOW,
+} from "./config"
 
 export default function ReservationPage() {
   const [formData, setFormData] = useState({

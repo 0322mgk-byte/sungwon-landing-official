@@ -6,121 +6,60 @@ import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import Image from "next/image"
 
-// ============================================
-// 📍 입지환경 페이지 설정
-// ============================================
-const SECTION_BG = "rgba(255,255,255,1)"     // 배경색 - rgba(R,G,B,투명도 0~1)
-const SECTION_PADDING_BOTTOM = 80;           // 섹션 하단 여백 (px)
-
-// ============================================
-// 🎬 콘텐츠 진입 애니메이션 설정
-// ============================================
-const ANIM_ENABLED = true;                   // 애니메이션 사용 여부
-const ANIM_DURATION = 1;                     // 애니메이션 시간 (초)
-const ANIM_EASE = "power2.out";              // 이징 - power1~4 + .in(천천히시작) / .out(천천히끝) / .inOut(양쪽천천히)
-const ANIM_Y_OFFSET = 20;                    // 시작 위치 Y 오프셋 (px) - 아래에서 위로 올라오는 거리
-const ANIM_DELAY = 0;                        // 애니메이션 시작 지연 (초)
-
-// ============================================
-// 📦 콘텐츠 컨테이너 설정
-// ============================================
-const CONTENT_MAX_WIDTH = 1000;              // 콘텐츠 최대 너비 (px)
-const CONTENT_PADDING_X = 20;                // 좌우 여백 (px)
-const CONTENT_GAP = 40;                      // 콘텐츠 요소 간 세로 간격 (px)
-
-// ============================================
-// 📝 타이틀 그룹 설정 (메인카피 + 서브카피)
-// ============================================
-const TITLE_GROUP_ENABLED = true;            // 타이틀 그룹 사용 여부
-const TITLE_GROUP_X = 0;                     // 그룹 좌우 위치 (px) - 음수: 왼쪽, 양수: 오른쪽
-const TITLE_GROUP_Y = 0;                     // 그룹 상하 위치 (px) - 음수: 위로, 양수: 아래로
-const TITLE_GROUP_PADDING_TOP = 150;         // 헤더 아래 여백 (px)
-const TITLE_GROUP_ALIGN = "center";          // 정렬 - "left", "center", "right"
-
-// 메인 카피 설정
-const MAIN_COPY_ENABLED = true;              // 메인 카피 사용 여부
-const MAIN_COPY = "군산지곡 성원상떼빌 입지환경";  // 메인 카피 텍스트
-const MAIN_COPY_SIZE = 45;                   // 글자 크기 (px)
-const MAIN_COPY_WEIGHT = 800;                // 글자 굵기 - 100~900
-const MAIN_COPY_COLOR = "rgba(0,28,61,1)";   // 글자 색상 - rgba(R,G,B,투명도 0~1)
-const MAIN_COPY_LETTER_SPACING = 0;          // 자간 (px)
-const MAIN_COPY_LINE_HEIGHT = 1.2;           // 줄 높이 - 1.0=글자크기, 1.5=1.5배
-const MAIN_COPY_X = 0;                       // 좌우 미세 조정 (px)
-const MAIN_COPY_Y = 0;                       // 상하 미세 조정 (px)
-
-// 서브 카피 설정
-const SUB_COPY_ENABLED = true;               // 서브 카피 사용 여부
-const SUB_COPY = "은파호수공원 인접, 지곡 생활권 중심 입지";  // 서브 카피 텍스트
-const SUB_COPY_SIZE = 20;                    // 글자 크기 (px)
-const SUB_COPY_WEIGHT = 400;                 // 글자 굵기 - 100~900
-const SUB_COPY_COLOR = "rgba(100,100,100,1)"; // 글자 색상 - rgba(R,G,B,투명도 0~1)
-const SUB_COPY_LETTER_SPACING = 0;           // 자간 (px)
-const SUB_COPY_LINE_HEIGHT = 1.5;            // 줄 높이 - 1.0=글자크기, 1.5=1.5배
-const SUB_COPY_X = 0;                        // 좌우 미세 조정 (px)
-const SUB_COPY_Y = 0;                        // 상하 미세 조정 (px)
-
-// 메인/서브 카피 간격
-const COPY_GAP = 16;                         // 메인 ↔ 서브 카피 간격 (px)
-
-// ============================================
-// 🗺️ 입지 정보 섹션 설정
-// ============================================
-const LOCATION_SECTION_ENABLED = true;       // 입지 정보 섹션 사용 여부
-const LOCATION_SECTION_MAX_WIDTH = 900;      // 섹션 최대 너비 (px)
-
-// 입지 정보 데이터
-// 📌 이미지 경로: public 폴더에 이미지 추가 후 경로 수정 필요
-const LOCATION_DATA = [
-  {
-    category: "TRAFFIC",
-    categoryColor: "rgba(65,105,225,1)",      // 카테고리 강조 색상 (파란색)
-    title: "더 빠른 교통특권",
-    description: ["월명로 인접 군산 중심지 접근 용이", "21번 국도 새만금 산업단지 및 서해안 고속도로"],
-    image: "/herosection.jpg",                // TODO: /location/traffic.jpg로 교체
-    position: "left",                         // 이미지 위치: "left" 또는 "right"
-  },
-  {
-    category: "LIFE",
-    categoryColor: "rgba(65,105,225,1)",
-    title: "더 편한 중심생활",
-    description: ["단지 앞 근린상가, 의료원, 예술의전당", "수송동중심상권 차량 10분 이용"],
-    image: "/herosection.jpg",                // TODO: /location/life.jpg로 교체
-    position: "right",
-  },
-  {
-    category: "VALUE",
-    categoryColor: "rgba(65,105,225,1)",
-    title: "안심도보 교육환경",
-    description: ["군산초·고 3분거리 및 동산중 도보권 통학 위치", "사업지 인근 풍부한 학원 시설", "나운·수송동 입시학원 이용 편리"],
-    image: "/herosection.jpg",                // TODO: /location/value.jpg로 교체
-    position: "left",
-  },
-  {
-    category: "NATURE",
-    categoryColor: "rgba(65,105,225,1)",
-    title: "더 빛날 자연환경",
-    description: ["은파 호수공원 산책로, 체육공원 등 인접", "쾌적한 주거환경 우수"],
-    image: "/herosection.jpg",                // TODO: /location/nature.jpg로 교체
-    position: "right",
-  },
-];
-
-// 입지 정보 스타일 설정
-const LOCATION_CATEGORY_SIZE = 13;           // 카테고리 글자 크기 (px)
-const LOCATION_CATEGORY_WEIGHT = 500;        // 카테고리 글자 굵기
-const LOCATION_CATEGORY_SPACING = 2;         // 카테고리 자간 (px)
-const LOCATION_TITLE_SIZE = 24;              // 타이틀 글자 크기 (px)
-const LOCATION_TITLE_WEIGHT = 700;           // 타이틀 글자 굵기
-const LOCATION_TITLE_COLOR = "rgba(30,30,30,1)"; // 타이틀 색상
-const LOCATION_DESC_SIZE = 14;               // 설명 글자 크기 (px)
-const LOCATION_DESC_WEIGHT = 400;            // 설명 글자 굵기
-const LOCATION_DESC_COLOR = "rgba(80,80,80,1)"; // 설명 색상
-const LOCATION_ACCENT_COLOR = "rgba(65,105,225,1)"; // 강조 색상 (세로선)
-const LOCATION_LINE_COLOR = "rgba(200,210,220,1)"; // 연결선 색상
-const LOCATION_IMAGE_WIDTH = 320;            // 이미지 너비 (px)
-const LOCATION_IMAGE_HEIGHT = 220;           // 이미지 높이 (px)
-const LOCATION_ITEM_GAP = 60;                // 항목 간 세로 간격 (px)
-// ============================================
+// 설정값 import (config.ts에서 값 수정 가능)
+import {
+  SECTION_BG,
+  SECTION_PADDING_BOTTOM,
+  ANIM_ENABLED,
+  ANIM_DURATION,
+  ANIM_EASE,
+  ANIM_Y_OFFSET,
+  ANIM_DELAY,
+  CONTENT_MAX_WIDTH,
+  CONTENT_PADDING_X,
+  CONTENT_GAP,
+  TITLE_GROUP_ENABLED,
+  TITLE_GROUP_X,
+  TITLE_GROUP_Y,
+  TITLE_GROUP_PADDING_TOP,
+  TITLE_GROUP_ALIGN,
+  MAIN_COPY_ENABLED,
+  MAIN_COPY,
+  MAIN_COPY_SIZE,
+  MAIN_COPY_WEIGHT,
+  MAIN_COPY_COLOR,
+  MAIN_COPY_LETTER_SPACING,
+  MAIN_COPY_LINE_HEIGHT,
+  MAIN_COPY_X,
+  MAIN_COPY_Y,
+  SUB_COPY_ENABLED,
+  SUB_COPY,
+  SUB_COPY_SIZE,
+  SUB_COPY_WEIGHT,
+  SUB_COPY_COLOR,
+  SUB_COPY_LETTER_SPACING,
+  SUB_COPY_LINE_HEIGHT,
+  SUB_COPY_X,
+  SUB_COPY_Y,
+  COPY_GAP,
+  LOCATION_SECTION_ENABLED,
+  LOCATION_SECTION_MAX_WIDTH,
+  LOCATION_DATA,
+  LOCATION_CATEGORY_SIZE,
+  LOCATION_CATEGORY_WEIGHT,
+  LOCATION_CATEGORY_SPACING,
+  LOCATION_TITLE_SIZE,
+  LOCATION_TITLE_WEIGHT,
+  LOCATION_TITLE_COLOR,
+  LOCATION_DESC_SIZE,
+  LOCATION_DESC_WEIGHT,
+  LOCATION_DESC_COLOR,
+  LOCATION_ACCENT_COLOR,
+  LOCATION_LINE_COLOR,
+  LOCATION_IMAGE_WIDTH,
+  LOCATION_IMAGE_HEIGHT,
+  LOCATION_ITEM_GAP,
+} from "./config"
 
 // 정렬 헬퍼 함수
 const getTextAlign = (align: string) => {
