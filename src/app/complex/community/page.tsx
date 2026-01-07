@@ -187,6 +187,7 @@ export default function CommunityPage() {
                 width={1920}
                 height={1080}
                 className="w-full h-auto"
+                priority
               />
               <p style={{ fontSize: '15px', color: 'rgba(150,150,150,1)', marginTop: '-28px' }}>
                 ※안내된 정보는 향후 사업 추진 및 인허가 단계에서 조정될 수 있으며, 참고 목적으로만 확인해 주시길 바랍니다.

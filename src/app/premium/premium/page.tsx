@@ -338,6 +338,7 @@ export default function PremiumDetailPage() {
                         alt={card.title}
                         fill
                         className="object-cover"
+                        priority={index < 4}
                       />
                     )}
                     {card.mediaType === 'video' && (

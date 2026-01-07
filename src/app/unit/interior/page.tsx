@@ -200,6 +200,7 @@ export default function InteriorPage() {
                 width={1920}
                 height={1080}
                 className="w-full h-auto"
+                priority={index < 2}
               />
             ))}
           </div>

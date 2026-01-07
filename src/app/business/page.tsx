@@ -208,6 +208,7 @@ export default function BusinessPage() {
             width={1920}
             height={1080}
             className="w-full h-auto"
+            priority
           />
 
           {/* 사업개요 표 */}

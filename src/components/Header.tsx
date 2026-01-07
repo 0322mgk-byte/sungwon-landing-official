@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react"
 import { gsap } from "gsap"
 import Image from "next/image"
+import Link from "next/link"
 import { Phone, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
@@ -70,10 +71,10 @@ const NAV_ITEMS = [
   },
   {
     label: "세대안내",
-    href: "/unit",
+    href: "/unit/type",
     subItems: [
+      { label: "평면 안내", href: "/unit/type" },
       { label: "인테리어", href: "/unit/interior" },
-      { label: "타입안내", href: "/unit/type" },
     ]
   },
   {
@@ -242,7 +243,7 @@ export default function Header() {
             transform: `translateX(${LEFT_GROUP_POSITION === 0 ? 0 : LEFT_GROUP_POSITION === 100 ? -100 : -50}%) translate(${LEFT_GROUP_X}px, ${LEFT_GROUP_Y}px)`
           }}
         >
-          <a href="/" className="cursor-pointer">
+          <Link href="/" className="cursor-pointer">
             <Image
               src={LOGO_SRC}
               alt="로고"
@@ -255,7 +256,7 @@ export default function Header() {
                 transform: `translate(${LOGO_X}px, ${LOGO_Y}px)`
               }}
             />
-          </a>
+          </Link>
         </div>
 
         {/* 중간: 네비게이션 (데스크톱) */}
@@ -268,7 +269,7 @@ export default function Header() {
           }}
         >
           {NAV_ITEMS.map((item, index) => (
-            <a
+            <Link
               key={index}
               href={item.href}
               className="cursor-pointer text-center"
@@ -302,7 +303,7 @@ export default function Header() {
               }}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -411,7 +412,7 @@ export default function Header() {
                 {/* 서브메뉴 항목들 */}
                 <div className="flex flex-col items-center" style={{ gap: `${DROPDOWN_ITEM_GAP}px` }}>
                   {item.subItems.map((subItem, subIndex) => (
-                    <a
+                    <Link
                       key={subIndex}
                       href={subItem.href}
                       className="transition-colors cursor-pointer whitespace-nowrap"
@@ -430,7 +431,7 @@ export default function Header() {
                       onMouseLeave={(e) => e.currentTarget.style.color = DROPDOWN_ITEM_COLOR}
                     >
                       {subItem.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -452,7 +453,7 @@ export default function Header() {
           <div className="flex flex-col" style={{ gap: `${MOBILE_MENU_ITEM_GAP}px` }}>
             {NAV_ITEMS.map((item, index) => (
               <div key={index}>
-                <a
+                <Link
                   href={item.href}
                   className="block transition-colors font-medium"
                   style={{ color: MOBILE_MENU_TEXT_COLOR }}
@@ -461,12 +462,12 @@ export default function Header() {
                   onMouseLeave={(e) => e.currentTarget.style.color = MOBILE_MENU_TEXT_COLOR}
                 >
                   {item.label}
-                </a>
+                </Link>
                 {/* 모바일 서브메뉴 */}
                 {item.subItems.length > 0 && (
                   <div className="flex flex-col mt-2" style={{ gap: '8px' }}>
                     {item.subItems.map((subItem, subIndex) => (
-                      <a
+                      <Link
                         key={subIndex}
                         href={subItem.href}
                         className="block transition-colors text-sm"
@@ -476,7 +477,7 @@ export default function Header() {
                         onMouseLeave={(e) => e.currentTarget.style.color = DROPDOWN_ITEM_COLOR}
                       >
                         {subItem.label}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
