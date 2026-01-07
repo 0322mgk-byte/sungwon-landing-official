@@ -5,6 +5,15 @@
 // 값을 수정한 후 저장하면 페이지에 바로 반영됩니다.
 // ============================================
 
+// 타입 정의
+type MediaType = "image" | "video" | "none";
+interface PremiumCard {
+  label: string;
+  title: string;
+  mediaType: MediaType;
+  mediaSrc: string;
+}
+
 // ============================================
 // 🎨 페이지 배경 설정
 // ============================================
@@ -111,53 +120,53 @@ export const CARD_TITLE_COLOR = "rgba(30,30,30,1)"; // 타이틀 색상
 //    - 이미지: mediaType을 "image"로 설정, mediaSrc에 이미지 경로
 //    - 영상: mediaType을 "video"로 설정, mediaSrc에 영상 경로
 //    - 프레임만: mediaType을 "none"으로 설정 (배경색만 표시)
-export const PREMIUM_CARDS = [
+export const PREMIUM_CARDS: PremiumCard[] = [
   {
     label: "01",
     title: "탁트인 교통환경",
-    mediaType: "image" as const,             // "image" | "video" | "none"
+    mediaType: "image",                      // "image" | "video" | "none"
     mediaSrc: "/herosection.jpg",            // 이미지/영상 경로
   },
   {
     label: "02",
     title: "쾌적한 생활환경",
-    mediaType: "image" as const,
+    mediaType: "image",
     mediaSrc: "/herosection.jpg",
   },
   {
     label: "03",
     title: "넉넉한 교육환경",
-    mediaType: "image" as const,
+    mediaType: "image",
     mediaSrc: "/herosection.jpg",
   },
   {
     label: "04",
     title: "꿈꾸던 커뮤니티",
-    mediaType: "image" as const,
+    mediaType: "image",
     mediaSrc: "/herosection.jpg",
   },
   {
     label: "05",
     title: "고품격 명품설계",
-    mediaType: "image" as const,
+    mediaType: "image",
     mediaSrc: "/herosection.jpg",
   },
   {
     label: "06",
     title: "군산의 생활중심",
-    mediaType: "image" as const,
+    mediaType: "image",
     mediaSrc: "/herosection.jpg",
   },
   {
     label: "07",
     title: "풍부한 개발호재",
-    mediaType: "image" as const,
+    mediaType: "image",
     mediaSrc: "/herosection.jpg",
   },
   {
     label: "08",
     title: "10년 민간임대",
-    mediaType: "image" as const,
+    mediaType: "image",
     mediaSrc: "/herosection.jpg",
   },
 ];
