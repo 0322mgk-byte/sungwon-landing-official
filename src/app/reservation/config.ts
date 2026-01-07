@@ -26,6 +26,10 @@ export const RESERVATION_IMAGES = [
   "/01.png",
   "/02-2.png",
 ];
+export const MOBILE_RESERVATION_IMAGES = [
+  "/01.png",
+  "/mobile-landing-image2.png",
+];
 export const IMAGE_GAP = 0;                         // 이미지 간격 (px) - 0으로 설정하여 붙임
 
 // ============================================
@@ -37,6 +41,21 @@ export const FORM_PADDING_Y = 50;                   // 폼 상하 여백 (px)
 export const FORM_BG = "rgba(255,255,255,1)";       // 폼 배경색
 export const FORM_BORDER_RADIUS = 12;               // 폼 모서리 둥글기 (px)
 export const FORM_ITEM_GAP = 40;                    // 폼 항목 간 세로 간격 (px)
+
+// ============================================
+// 📱 모바일 리드폼 설정 (화면 너비 1080px 미만 적용)
+// ============================================
+export const MOBILE_FORM_PADDING_X = 24;            // 모바일 폼 좌우 여백 (px)
+export const MOBILE_FORM_PADDING_Y = 32;            // 모바일 폼 상하 여백 (px)
+export const MOBILE_FORM_ITEM_GAP = 28;             // 모바일 폼 항목 간 세로 간격 (px)
+export const MOBILE_FORM_TITLE_SIZE = 28;           // 모바일 타이틀 글자 크기 (px)
+export const MOBILE_FORM_SUBTITLE_SIZE = 14;        // 모바일 서브타이틀 글자 크기 (px)
+export const MOBILE_LABEL_FONT_SIZE = 15;           // 모바일 라벨 글자 크기 (px)
+export const MOBILE_INPUT_FONT_SIZE = 16;           // 모바일 입력 필드 글자 크기 (px) - 16px 이상이면 iOS 확대 방지
+export const MOBILE_OPTION_FONT_SIZE = 13;          // 모바일 옵션 버튼 글자 크기 (px)
+export const MOBILE_FIELD_PADDING_X = 14;           // 모바일 필드 좌우 패딩 (px)
+export const MOBILE_FIELD_PADDING_Y = 14;           // 모바일 필드 상하 패딩 (px)
+export const MOBILE_AGE_BUTTON_GAP = 8;             // 모바일 연령대 버튼 간 간격 (px)
 
 // ============================================
 // 🎨 리드폼 색상 설정
@@ -164,7 +183,7 @@ export const POPUP_BUTTON_WIDTH = 120;                   // 팝업 버튼 너비
 export const KAKAO_ENABLED = true;                       // 카카오톡 버튼 사용 여부
 export const KAKAO_URL = "https://open.kakao.com/o/sYpCdW6h";  // 카카오톡 오픈채팅 URL (변경 필요)
 export const KAKAO_SIZE = 60;                            // 버튼 크기 (px)
-export const KAKAO_BOTTOM = 30;                          // 하단 여백 (px)
-export const KAKAO_RIGHT = 30;                           // 우측 여백 (px)
+export const KAKAO_BOTTOM = 40;                         // 하단 여백 (px)
+export const KAKAO_LEFT = 30;                            // 좌측 여백 (px)
 export const KAKAO_BG = "#FEE500";                        // 카카오 노란색 배경
 export const KAKAO_SHADOW = "0 4px 12px rgba(0,0,0,0.15)"; // 그림자 효과

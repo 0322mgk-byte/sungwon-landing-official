@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 import { gsap } from "gsap"
 import Image from "next/image"
 import Link from "next/link"
-import { Phone, Menu, X } from "lucide-react"
+import { Phone, Menu, X, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { usePathname } from "next/navigation"
@@ -77,6 +77,9 @@ import {
   PHONE_BLINK_ENABLED,
   PHONE_BLINK_COLOR,
   PHONE_BLINK_DURATION,
+  MOBILE_HEADER_BG,
+  MOBILE_LOGO_SRC,
+  MOBILE_LOGO_SIZE,
   MOBILE_MENU_BG,
   MOBILE_MENU_TEXT_COLOR,
   MOBILE_MENU_HOVER_COLOR,
@@ -91,6 +94,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [openSubMenu, setOpenSubMenu] = useState<number | null>(null)
   const pathname = usePathname()
   const isHomePage = pathname === "/"
 
@@ -123,8 +127,35 @@ export default function Header() {
     }
   }, [])
 
-  // 배경색 결정: 호버 > 스크롤(서브페이지) > 기본
+  // 모바일 여부 감지
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  // 모바일 메뉴 바깥 클릭 시 닫기
+  useEffect(() => {
+    if (!isMenuOpen) return
+
+    const handleClickOutside = (e: MouseEvent) => {
+      const header = headerRef.current as HTMLElement | null
+      if (header && !header.contains(e.target as Node)) {
+        setIsMenuOpen(false)
+        setOpenSubMenu(null)
+      }
+    }
+
+    document.addEventListener("click", handleClickOutside)
+    return () => document.removeEventListener("click", handleClickOutside)
+  }, [isMenuOpen])
+
+  // 배경색 결정: 모바일 > 호버 > 스크롤(서브페이지) > 기본
   const getHeaderBg = () => {
+    if (isMobile) return MOBILE_HEADER_BG
     if (isHovered) return HEADER_HOVER_BG
     if (!isHomePage && isScrolled) return HEADER_SCROLL_BG
     return HEADER_BG
@@ -139,25 +170,34 @@ export default function Header() {
   }
 
   return (
-    <header
-      ref={headerRef}
-      className="fixed top-0 w-full z-50"
-      style={{
-        height: `${HEADER_HEIGHT}px`,
-        backgroundColor: getHeaderBg(),
-        borderBottom: getHeaderBorder()
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <>
+      {/* 모바일 배경색 CSS */}
+      <style jsx global>{`
+        @media (max-width: 767px) {
+          .header-mobile-bg {
+            background-color: ${MOBILE_HEADER_BG} !important;
+          }
+        }
+      `}</style>
+      <header
+        ref={headerRef}
+        className="fixed top-0 w-full z-50 header-mobile-bg"
+        style={{
+          height: `${HEADER_HEIGHT}px`,
+          backgroundColor: getHeaderBg(),
+          borderBottom: getHeaderBorder()
+        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
       <div
         className="w-full h-full relative flex items-center"
         style={{ paddingLeft: `${HEADER_PADDING_X}px`, paddingRight: `${HEADER_PADDING_X}px` }}
       >
 
-        {/* 좌측: 로고 */}
+        {/* 좌측: 로고 (데스크톱) */}
         <div
-          className="absolute flex items-center"
+          className="absolute hidden md:flex items-center"
           style={{
             left: `${LEFT_GROUP_POSITION}%`,
             transform: `translateX(${LEFT_GROUP_POSITION === 0 ? 0 : LEFT_GROUP_POSITION === 100 ? -100 : -50}%) translate(${LEFT_GROUP_X}px, ${LEFT_GROUP_Y}px)`
@@ -178,6 +218,64 @@ export default function Header() {
             />
           </Link>
         </div>
+
+        {/* 모바일 메뉴 버튼 (좌측) */}
+        <button
+          className="md:hidden text-white hover:bg-white/10 -ml-2 p-1"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? (
+            <X size={32} strokeWidth={1.5} />
+          ) : (
+            <svg width="36" height="32" viewBox="0 0 36 32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="2" y1="6" x2="30" y2="6" />
+              <line x1="2" y1="16" x2="30" y2="16" />
+              <line x1="2" y1="26" x2="30" y2="26" />
+            </svg>
+          )}
+        </button>
+
+        {/* 중앙: 로고 (모바일) */}
+        <div className="absolute left-1/2 -translate-x-1/2 md:hidden">
+          <Link href="/" className="cursor-pointer">
+            <Image
+              src={MOBILE_LOGO_SRC}
+              alt="로고"
+              width={MOBILE_LOGO_SIZE}
+              height={0}
+              className="object-contain h-auto"
+              style={{
+                width: `${MOBILE_LOGO_SIZE}px`,
+                height: 'auto',
+              }}
+            />
+          </Link>
+        </div>
+
+        {/* 우측: 전화버튼 (모바일) */}
+        <a
+          href={`tel:${PHONE_NUMBER.replace(/-/g, '')}`}
+          className="md:hidden absolute right-4 flex items-center gap-1"
+          style={{
+            background: 'linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFD700 100%)',
+            padding: '6px 10px',
+            borderRadius: '20px',
+            boxShadow: '0 3px 12px rgba(255, 107, 53, 0.4), 0 0 15px rgba(255, 215, 0, 0.25)',
+            animation: 'pulse-glow 1.5s ease-in-out infinite',
+          }}
+        >
+          <Phone size={14} className="text-white" fill="white" />
+          <span
+            style={{
+              color: 'white',
+              fontSize: '12px',
+              fontWeight: 700,
+              textShadow: '0 1px 2px rgba(0,0,0,0.2)',
+            }}
+          >
+            전화상담
+          </span>
+        </a>
 
         {/* 중간: 네비게이션 (데스크톱) */}
         <nav
@@ -259,7 +357,8 @@ export default function Header() {
               style={{
                 fontSize: `${PHONE_FONT_SIZE}px`,
                 fontWeight: PHONE_FONT_WEIGHT,
-                color: PHONE_COLOR
+                color: PHONE_COLOR,
+                whiteSpace: 'nowrap'
               }}
             >
               {PHONE_NUMBER}
@@ -267,18 +366,6 @@ export default function Header() {
           </div>
         </div>
 
-        {/* 모바일 메뉴 버튼 */}
-        <Button
-          variant="ghost"
-          className="md:hidden text-white hover:bg-white/10"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? (
-            <X className="w-6 h-6" />
-          ) : (
-            <Menu className="w-6 h-6" />
-          )}
-        </Button>
       </div>
 
       {/* 데스크톱 드롭다운 메가메뉴 */}
@@ -363,36 +450,86 @@ export default function Header() {
       {/* 모바일 메뉴 드롭다운 */}
       {isMenuOpen && (
         <div
-          className="lg:hidden text-center shadow-lg"
+          className="lg:hidden shadow-lg"
           style={{
             backgroundColor: MOBILE_MENU_BG,
             paddingTop: `${MOBILE_MENU_PADDING_Y}px`,
             paddingBottom: `${MOBILE_MENU_PADDING_Y}px`,
           }}
         >
-          <div className="flex flex-col" style={{ gap: `${MOBILE_MENU_ITEM_GAP}px` }}>
+          <div className="flex flex-col">
             {NAV_ITEMS.map((item, index) => (
               <div key={index}>
-                <Link
-                  href={item.href}
-                  className="block transition-colors font-medium"
-                  style={{ color: MOBILE_MENU_TEXT_COLOR }}
-                  onClick={() => setIsMenuOpen(false)}
-                  onMouseEnter={(e) => e.currentTarget.style.color = MOBILE_MENU_HOVER_COLOR}
-                  onMouseLeave={(e) => e.currentTarget.style.color = MOBILE_MENU_TEXT_COLOR}
-                >
-                  {item.label}
-                </Link>
-                {/* 모바일 서브메뉴 */}
-                {item.subItems.length > 0 && (
-                  <div className="flex flex-col mt-2" style={{ gap: '8px' }}>
+                {/* 구분선 (첫 번째 항목 제외) */}
+                {index > 0 && (
+                  <div
+                    style={{
+                      height: '1px',
+                      backgroundColor: DROPDOWN_DIVIDER_COLOR,
+                      marginLeft: '20px',
+                      marginRight: '20px',
+                    }}
+                  />
+                )}
+                {/* 메인 메뉴 항목 */}
+                {item.subItems.length > 0 ? (
+                  <button
+                    className="w-full flex items-center justify-center transition-colors font-medium"
+                    style={{
+                      color: MOBILE_MENU_TEXT_COLOR,
+                      paddingTop: `${MOBILE_MENU_ITEM_GAP}px`,
+                      paddingBottom: `${MOBILE_MENU_ITEM_GAP}px`,
+                    }}
+                    onClick={() => setOpenSubMenu(openSubMenu === index ? null : index)}
+                  >
+                    <span>{item.label}</span>
+                    <ChevronDown
+                      size={18}
+                      className="ml-1 transition-transform"
+                      style={{
+                        transform: openSubMenu === index ? 'rotate(180deg)' : 'rotate(0deg)',
+                      }}
+                    />
+                  </button>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className="block text-center transition-colors font-medium"
+                    style={{
+                      color: MOBILE_MENU_TEXT_COLOR,
+                      paddingTop: `${MOBILE_MENU_ITEM_GAP}px`,
+                      paddingBottom: `${MOBILE_MENU_ITEM_GAP}px`,
+                    }}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                )}
+                {/* 모바일 서브메뉴 (아코디언) */}
+                {item.subItems.length > 0 && openSubMenu === index && (
+                  <div
+                    className="flex flex-col"
+                    style={{
+                      backgroundColor: 'rgba(245,245,245,1)',
+                      paddingTop: '12px',
+                      paddingBottom: '12px',
+                    }}
+                  >
                     {item.subItems.map((subItem, subIndex) => (
                       <Link
                         key={subIndex}
                         href={subItem.href}
-                        className="block transition-colors text-sm"
-                        style={{ color: DROPDOWN_ITEM_COLOR }}
-                        onClick={() => setIsMenuOpen(false)}
+                        className="block text-center transition-colors"
+                        style={{
+                          color: DROPDOWN_ITEM_COLOR,
+                          fontSize: `${DROPDOWN_ITEM_SIZE}px`,
+                          paddingTop: '8px',
+                          paddingBottom: '8px',
+                        }}
+                        onClick={() => {
+                          setIsMenuOpen(false)
+                          setOpenSubMenu(null)
+                        }}
                         onMouseEnter={(e) => e.currentTarget.style.color = DROPDOWN_ITEM_HOVER_COLOR}
                         onMouseLeave={(e) => e.currentTarget.style.color = DROPDOWN_ITEM_COLOR}
                       >
@@ -407,5 +544,6 @@ export default function Header() {
         </div>
       )}
     </header>
+    </>
   )
 }

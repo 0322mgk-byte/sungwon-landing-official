@@ -124,7 +124,7 @@ export const RIGHT_GROUP_X = 0;                     // 미세 조정 좌우 (px)
 export const RIGHT_GROUP_Y = 0;                     // 미세 조정 상하 (px)
 
 // 전화번호 박스 설정
-export const PHONE_NUMBER = "1833-5859";            // 전화번호
+export const PHONE_NUMBER = "063-911-0017";         // 전화번호
 export const PHONE_BOX_BG = "rgba(0,28,61,1)";      // 박스 배경색 - rgba(R,G,B,투명도 0~1)
 export const PHONE_BOX_PADDING_X = 24;              // 박스 좌우 패딩 (px)
 export const PHONE_BOX_PADDING_Y = 8;               // 박스 상하 패딩 (px)
@@ -146,6 +146,13 @@ export const PHONE_GAP = 12;                        // 아이콘과 번호 사�
 export const PHONE_BLINK_ENABLED = true;            // 깜빡임 사용 여부
 export const PHONE_BLINK_COLOR = "rgba(255,100,0,1)"; // 깜빡임 색상 (강렬한 주황색) - rgba(R,G,B,투명도 0~1)
 export const PHONE_BLINK_DURATION = 0.8;            // 깜빡임 속도 (초) - 한 색상에서 다른 색상으로 전환 시간
+
+// ============================================
+// 📱 모바일 헤더 설정
+// ============================================
+export const MOBILE_HEADER_BG = "rgb(0, 32, 70)";         // 모바일 헤더 배경색 (네이비) - rgba(R,G,B,투명도 0~1)
+export const MOBILE_LOGO_SRC = "/sungwon-mobile-logo1.png"; // 모바일 로고 이미지 경로 (public 폴더)
+export const MOBILE_LOGO_SIZE = 43;                        // 모바일 로고 크기 (px)
 
 // ============================================
 // 📱 모바일 메뉴 설정

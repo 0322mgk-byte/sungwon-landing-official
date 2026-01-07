@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 
 // 설정값 import (Footer.config.ts에서 값 수정 가능)
@@ -17,6 +17,7 @@ import {
   LEFT_GROUP_ALIGN_Y,
   LOGO_SRC,
   LOGO_SIZE,
+  MOBILE_LOGO_SIZE,
   LOGO_X,
   LOGO_Y,
   COMPANY_INFO_X,
@@ -84,6 +85,15 @@ const getAlignY = (align: string) => {
 
 export default function Footer() {
   const phoneNumberRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // 모바일 감지
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
   // 전화번호 깜빡임 애니메이션 (헤더와 반대: 주황색에서 시작)
   useEffect(() => {
@@ -102,8 +112,8 @@ export default function Footer() {
   }, [])
 
   return (
-    <footer className={`text-gray-400 ${FOOTER_PADDING_X} overflow-hidden`} style={{ height: `${FOOTER_HEIGHT}px`, backgroundColor: FOOTER_BG }}>
-      <div className={`max-w-7xl mx-auto h-full flex flex-col md:flex-row items-stretch justify-between ${CONTENT_GAP}`}>
+    <footer className={`text-gray-400 ${FOOTER_PADDING_X} overflow-hidden`} style={{ height: isMobile ? 'auto' : `${FOOTER_HEIGHT}px`, backgroundColor: FOOTER_BG, paddingTop: isMobile ? '40px' : 0, paddingBottom: isMobile ? '40px' : 0 }}>
+      <div className={`max-w-7xl mx-auto h-full flex flex-col md:flex-row ${isMobile ? 'items-center' : 'items-stretch'} justify-between ${CONTENT_GAP}`}>
 
         {/* 왼쪽: 로고 + 회사 정보 + 카피라이트 */}
         <div
@@ -117,8 +127,8 @@ export default function Footer() {
           <Image
             src={LOGO_SRC}
             alt="Logo"
-            width={LOGO_SIZE}
-            height={LOGO_SIZE}
+            width={isMobile ? MOBILE_LOGO_SIZE : LOGO_SIZE}
+            height={isMobile ? MOBILE_LOGO_SIZE : LOGO_SIZE}
             className="object-contain h-auto"
             style={{ transform: `translate(${LOGO_X}px, ${LOGO_Y}px)` }}
           />
@@ -162,7 +172,8 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* 오른쪽: 대표번호 + 더 알아보기 + SNS 로고 */}
+        {/* 오른쪽: 대표번호 + 더 알아보기 + SNS 로고 (PC에서만 표시) */}
+        {!isMobile && (
         <div
           className={`flex flex-col ${getAlignX(RIGHT_GROUP_ALIGN_X)} ${getAlignY(RIGHT_GROUP_ALIGN_Y)}`}
           style={{
@@ -251,6 +262,7 @@ export default function Footer() {
             로그인
           </a>
         </div>
+        )}
 
       </div>
     </footer>

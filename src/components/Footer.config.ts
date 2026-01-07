@@ -27,6 +27,7 @@ export const LEFT_GROUP_ALIGN_Y = "center";     // 세로 정렬 - "top", "cente
 // ============================================
 export const LOGO_SRC = "/footer-image-logo.png";  // 로고 이미지 이름을 적어주세요 (public 폴더)
 export const LOGO_SIZE = 250;                // 로고 크기 (px) - 가로 기준, 세로는 비율 자동
+export const MOBILE_LOGO_SIZE = 200;         // 모바일 로고 크기 (px)
 export const LOGO_X = 0;                     // 로고 좌우 위치 (px) - 음수: 왼쪽, 양수: 오른쪽
 export const LOGO_Y = 0;                     // 로고 상하 위치 (px) - 음수: 위로, 양수: 아래로
 
@@ -38,7 +39,7 @@ export const COMPANY_INFO_Y = 0;             // 상하 위치 (px) - 음수: 위
 export const COMPANY_INFO = [
   { label: "현장명", value: "군산 지곡동 성원상떼빌 더프라임" },
   { label: "현장 위치", value: "전라북도 군산시 지곡동 62-8일원 공동주택 신축공사" },
-  { label: "상담 문의", value: "1833-5859" },
+  { label: "상담 문의", value: "063-911-0017" },
 ];
 export const COMPANY_LABEL_WIDTH = 100;      // 라벨 너비 (px) - 정렬용
 export const COMPANY_INFO_SIZE = 15;         // 글자 크기 (px)
@@ -81,7 +82,7 @@ export const PHONE_LABEL_Y = 1;              // 라벨 상하 위치 (px) - 음�
 export const PHONE_LABEL_SIZE = 23;          // 라벨 글자 크기 (px)
 export const PHONE_LABEL_WEIGHT = 300;       // 라벨 굵기 - 100~900
 export const PHONE_LABEL_COLOR = "rgba(255,255,255,1)"; // 라벨 색상 - rgba(R,G,B,투명도 0~1)
-export const PHONE_NUMBER = "1833-5859";
+export const PHONE_NUMBER = "063-911-0017";
 export const PHONE_NUMBER_X = 0;             // 번호 좌우 위치 (px) - 음수: 왼쪽, 양수: 오른쪽
 export const PHONE_NUMBER_Y = 0;             // 번호 상하 위치 (px) - 음수: 위로, 양수: 아래로
 export const PHONE_NUMBER_SIZE = 35;         // 번호 글자 크기 (px)

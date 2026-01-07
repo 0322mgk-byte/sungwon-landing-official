@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import PageTracker from "@/components/PageTracker";
+import ViewportMeta from "@/components/ViewportMeta";
 
 export const metadata: Metadata = {
   title: "성원상떼빌 - 프리미엄 라이프의 시작",
@@ -14,7 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body className="antialiased">
+        <ViewportMeta />
         <PageTracker />
         {children}
       </body>
