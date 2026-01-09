@@ -418,7 +418,7 @@ export default function Header() {
                 )}
                 {/* 서브메뉴 항목들 */}
                 <div className="flex flex-col items-center" style={{ gap: `${DROPDOWN_ITEM_GAP}px` }}>
-                  {item.subItems.filter(subItem => !subItem.mobileOnly).map((subItem, subIndex) => (
+                  {item.subItems.map((subItem, subIndex) => (
                     <Link
                       key={subIndex}
                       href={subItem.href}
