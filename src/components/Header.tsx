@@ -33,10 +33,10 @@ import {
   NAV_ITEMS,
   DROPDOWN_ENABLED,
   DROPDOWN_BG,
-  DROPDOWN_HEIGHT,
   DROPDOWN_BORDER_COLOR,
   DROPDOWN_ANIM_DURATION,
   DROPDOWN_PADDING_TOP,
+  DROPDOWN_PADDING_BOTTOM,
   DROPDOWN_ITEM_COLOR,
   DROPDOWN_ITEM_HOVER_COLOR,
   DROPDOWN_ITEM_SIZE,
@@ -374,16 +374,16 @@ export default function Header() {
           className="absolute left-0 w-full hidden lg:block"
           style={{
             top: `${HEADER_HEIGHT}px`,
-            height: `${DROPDOWN_HEIGHT}px`,
             backgroundColor: DROPDOWN_BG,
             borderTop: `1px solid ${DROPDOWN_BORDER_COLOR}`,
             borderBottom: `1px solid ${DROPDOWN_BORDER_COLOR}`,
             animation: `slideDown ${DROPDOWN_ANIM_DURATION}s ease-out`,
             paddingTop: `${DROPDOWN_PADDING_TOP}px`,
+            paddingBottom: `${DROPDOWN_PADDING_BOTTOM}px`,
           }}
         >
           <div
-            className="w-full h-full flex justify-center"
+            className="w-full flex justify-center"
             style={{ gap: `${NAV_GAP}px` }}
           >
             {NAV_ITEMS.filter(item => !item.mobileOnly).map((item, index, filteredItems) => (
@@ -397,10 +397,10 @@ export default function Header() {
                   className="absolute"
                   style={{
                     top: `-${DROPDOWN_PADDING_TOP}px`,
+                    bottom: `-${DROPDOWN_PADDING_BOTTOM}px`,
                     left: `-${NAV_GAP / 2}px`,
                     width: `${DROPDOWN_DIVIDER_WIDTH}px`,
                     backgroundColor: DROPDOWN_DIVIDER_COLOR,
-                    height: `${DROPDOWN_HEIGHT}px`,
                   }}
                 />
                 {/* 마지막 컬럼 오른쪽 구분선 */}
@@ -409,10 +409,10 @@ export default function Header() {
                     className="absolute"
                     style={{
                       top: `-${DROPDOWN_PADDING_TOP}px`,
+                      bottom: `-${DROPDOWN_PADDING_BOTTOM}px`,
                       right: `-${NAV_GAP / 2}px`,
                       width: `${DROPDOWN_DIVIDER_WIDTH}px`,
                       backgroundColor: DROPDOWN_DIVIDER_COLOR,
-                      height: `${DROPDOWN_HEIGHT}px`,
                     }}
                   />
                 )}
@@ -514,8 +514,8 @@ export default function Header() {
                     className="flex flex-col"
                     style={{
                       backgroundColor: 'rgba(245,245,245,1)',
-                      paddingTop: '12px',
-                      paddingBottom: '12px',
+                      paddingTop: '16px',
+                      paddingBottom: '16px',
                     }}
                   >
                     {item.subItems.map((subItem, subIndex) => (
@@ -524,11 +524,11 @@ export default function Header() {
                         href={subItem.href}
                         className="block text-left transition-colors"
                         style={{
-                          color: DROPDOWN_ITEM_COLOR,
-                          fontSize: `${DROPDOWN_ITEM_SIZE}px`,
-                          paddingTop: '8px',
-                          paddingBottom: '8px',
-                          paddingLeft: '40px',
+                          color: 'rgba(60,60,60,1)',
+                          fontSize: '15px',
+                          paddingTop: '12px',
+                          paddingBottom: '12px',
+                          paddingLeft: '48px',
                         }}
                         onClick={() => {
                           setIsMenuOpen(false)

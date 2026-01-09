@@ -99,6 +99,7 @@ export const DROPDOWN_HEIGHT = 210;                          // 드롭다운 높
 export const DROPDOWN_BORDER_COLOR = "rgba(230,230,230,1)";  // 드롭다운 테두리 색상
 export const DROPDOWN_ANIM_DURATION = 0.3;                   // 드롭다운 애니메이션 시간 (초)
 export const DROPDOWN_PADDING_TOP = 24;                      // 드롭다운 상단 여백 (px)
+export const DROPDOWN_PADDING_BOTTOM = 24;                   // 드롭다운 하단 여백 (px)
 
 // 드롭다운 서브메뉴 글자 설정
 export const DROPDOWN_ITEM_COLOR = "rgba(100,100,100,1)";    // 서브메뉴 글자색
