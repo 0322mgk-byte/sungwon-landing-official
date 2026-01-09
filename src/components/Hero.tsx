@@ -118,7 +118,7 @@ export default function Hero() {
                 width: isMobile ? '300%' : '177.78vh',
                 height: isMobile ? '300%' : '100vh',
                 border: 'none',
-                transform: `translate(-50%, -50%) scale(${(isMobile ? MOBILE_YOUTUBE_SCALE : YOUTUBE_SCALE) / 160}) translate(${isMobile ? MOBILE_YOUTUBE_X : YOUTUBE_X}%, ${isMobile ? MOBILE_YOUTUBE_Y : YOUTUBE_Y}3.5%)`,
+                transform: `translate(-50%, -50%) scale(${(isMobile ? MOBILE_YOUTUBE_SCALE : YOUTUBE_SCALE) / 100}) translate(${isMobile ? MOBILE_YOUTUBE_X : YOUTUBE_X}%, ${isMobile ? MOBILE_YOUTUBE_Y : YOUTUBE_Y}%)`,
               }}
               allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture"
               allowFullScreen

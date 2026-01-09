@@ -21,7 +21,7 @@ export const IMAGE_SRC = "/pickso-batang.png"
 export const YOUTUBE_VIDEO_ID = "Ot1hU2M7Rdg"  // 유튜브 영상 ID (URL에서 v= 뒤의 값)
 
 // 유튜브 영상 크기/위치 조절 (PC)
-export const YOUTUBE_SCALE = 130      // 확대/축소 (%) - 100 = 원본, 150 = 1.5배 확대
+export const YOUTUBE_SCALE = 117      // 확대/축소 (%) - 100 = 원본, 150 = 1.5배 확대
 export const YOUTUBE_X = 0            // 좌우 이동 (%) - 음수: 왼쪽, 양수: 오른쪽
 export const YOUTUBE_Y = -11.5            // 상하 이동 (%) - 음수: 위로, 양수: 아래로
 
