@@ -26,9 +26,9 @@ export const YOUTUBE_X = 0            // 좌우 이동 (%) - 음수: 왼쪽, 양
 export const YOUTUBE_Y = -11.5            // 상하 이동 (%) - 음수: 위로, 양수: 아래로
 
 // 유튜브 영상 크기/위치 조절 (모바일)
-export const MOBILE_YOUTUBE_SCALE = 100  // 모바일 확대/축소 (%)
+export const MOBILE_YOUTUBE_SCALE = 70  // 모바일 확대/축소 (%)
 export const MOBILE_YOUTUBE_X = 0        // 모바일 좌우 이동 (%)
-export const MOBILE_YOUTUBE_Y = 0        // 모바일 상하 이동 (%)
+export const MOBILE_YOUTUBE_Y = 1        // 모바일 상하 이동 (%)
 
 // ============================================
 // 📐 히어로 섹션 레이아웃

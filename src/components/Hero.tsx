@@ -269,8 +269,9 @@ export default function Hero() {
               }}
             >
               <textPath href="#circlePath" startOffset="0%">
+                <tspan style={{ fill: 'rgba(120, 120, 120, 1)' }}>{"  "}·{"  "}</tspan>
                 <tspan style={{ fill: 'rgb(243, 115, 32)' }}>군산지곡</tspan>
-                <tspan style={{ fill: 'rgba(120, 120, 120, 1)' }}>{"    "}성원상떼빌{"    "}더프라임{"  "}·{"  "}</tspan>
+                <tspan style={{ fill: 'rgba(120, 120, 120, 1)' }}>{"    "}성원상떼빌{"    "}더프라임</tspan>
               </textPath>
             </text>
           </svg>
