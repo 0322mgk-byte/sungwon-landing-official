@@ -838,8 +838,6 @@ export default function ReservationPage() {
       {KAKAO_ENABLED && (
         <a
           href={KAKAO_URL}
-          target="_blank"
-          rel="noopener noreferrer"
           className="fixed flex items-center justify-center transition-transform hover:scale-110 z-40 md:hidden"
           style={{
             width: `${KAKAO_SIZE}px`,

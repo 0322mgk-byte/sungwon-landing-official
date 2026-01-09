@@ -8,17 +8,33 @@
 // ============================================
 // 🎬 미디어 타입 설정
 // ============================================
-// "video" 또는 "image" 중 선택
-export const HERO_TYPE: "video" | "image" = "video"
+// "video" 또는 "image" 또는 "youtube" 중 선택
+export const HERO_TYPE: "video" | "image" | "youtube" = "youtube"
 
 // 미디어 파일 경로 (public 폴더)
 export const VIDEO_SRC = "/hero-section-video.mp4"
 export const IMAGE_SRC = "/pickso-batang.png"
 
 // ============================================
+// 📺 유튜브 설정 (HERO_TYPE = "youtube" 일 때)
+// ============================================
+export const YOUTUBE_VIDEO_ID = "Ot1hU2M7Rdg"  // 유튜브 영상 ID (URL에서 v= 뒤의 값)
+
+// 유튜브 영상 크기/위치 조절 (PC)
+export const YOUTUBE_SCALE = 130      // 확대/축소 (%) - 100 = 원본, 150 = 1.5배 확대
+export const YOUTUBE_X = 0            // 좌우 이동 (%) - 음수: 왼쪽, 양수: 오른쪽
+export const YOUTUBE_Y = -11.5            // 상하 이동 (%) - 음수: 위로, 양수: 아래로
+
+// 유튜브 영상 크기/위치 조절 (모바일)
+export const MOBILE_YOUTUBE_SCALE = 180  // 모바일 확대/축소 (%)
+export const MOBILE_YOUTUBE_X = 0        // 모바일 좌우 이동 (%)
+export const MOBILE_YOUTUBE_Y = 5        // 모바일 상하 이동 (%)
+
+// ============================================
 // 📐 히어로 섹션 레이아웃
 // ============================================
-export const HERO_HEIGHT = "90vh"      // 히어로 섹션 높이
+export const HERO_HEIGHT = "90vh"      // PC 히어로 섹션 높이
+export const MOBILE_HERO_HEIGHT = "60vh" // 모바일 히어로 섹션 높이
 export const HERO_BG = "rgba(0,0,0,1)" // 배경색 - rgba(R,G,B,투명도 0~1)
 
 // ============================================

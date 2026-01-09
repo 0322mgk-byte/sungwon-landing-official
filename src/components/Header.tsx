@@ -286,7 +286,7 @@ export default function Header() {
             gap: `${NAV_GAP}px`
           }}
         >
-          {NAV_ITEMS.map((item, index) => (
+          {NAV_ITEMS.filter(item => !item.mobileOnly).map((item, index) => (
             <Link
               key={index}
               href={item.href}
@@ -386,7 +386,7 @@ export default function Header() {
             className="w-full h-full flex justify-center"
             style={{ gap: `${NAV_GAP}px` }}
           >
-            {NAV_ITEMS.map((item, index) => (
+            {NAV_ITEMS.filter(item => !item.mobileOnly).map((item, index, filteredItems) => (
               <div
                 key={index}
                 className="relative flex flex-col items-center"
@@ -404,7 +404,7 @@ export default function Header() {
                   }}
                 />
                 {/* 마지막 컬럼 오른쪽 구분선 */}
-                {index === NAV_ITEMS.length - 1 && (
+                {index === filteredItems.length - 1 && (
                   <div
                     className="absolute"
                     style={{

@@ -28,6 +28,22 @@ export const CONTENT_PADDING_X = 20;                // 좌우 여백 (px) - 모�
 export const CONTENT_GAP = 40;                      // 콘텐츠 요소 간 세로 간격 (px)
 
 // ============================================
+// 📱 모바일 설정 (768px 미만)
+// ============================================
+export const MOBILE_CONTENT_PADDING_X = 16;         // 모바일 좌우 여백 (px)
+export const MOBILE_CONTENT_GAP = 24;               // 모바일 콘텐츠 간격 (px)
+export const MOBILE_TITLE_PADDING_TOP = 120;        // 모바일 상단 여백 (px)
+export const MOBILE_MAIN_COPY_SIZE = 24;            // 모바일 메인 카피 크기 (px)
+export const MOBILE_SUB_COPY_SIZE = 14;             // 모바일 서브 카피 크기 (px)
+export const MOBILE_TABLE_FONT_SIZE = 13;           // 모바일 표 글자 크기 (px)
+export const MOBILE_TABLE_HEADER_WIDTH = 90;        // 모바일 헤더 열 너비 (px)
+export const MOBILE_TABLE_ROW_HEIGHT = 48;          // 모바일 행 높이 (px)
+export const MOBILE_SECTION_PADDING_BOTTOM = 40;    // 모바일 하단 여백 (px)
+export const MOBILE_ZOOM_HINT_TEXT = "두 손가락으로 확대하여 자세히 보실 수 있습니다"; // 모바일 확대 안내 문구
+export const MOBILE_ZOOM_HINT_SIZE = 12;            // 모바일 확대 안내 글자 크기 (px)
+export const MOBILE_ZOOM_HINT_COLOR = "rgba(150,150,150,1)"; // 모바일 확대 안내 글자 색상
+
+// ============================================
 // 📝 타이틀 그룹 설정 (메인카피 + 서브카피)
 // ============================================
 export const TITLE_GROUP_ENABLED = true;            // 타이틀 그룹 사용 여부

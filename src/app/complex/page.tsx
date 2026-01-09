@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
@@ -27,6 +27,16 @@ const ANIM_DELAY = 0;                        // 애니메이션 시작 지연 (�
 const CONTENT_MAX_WIDTH = 1000;              // 콘텐츠 최대 너비 (px)
 const CONTENT_PADDING_X = 20;                // 좌우 여백 (px)
 const CONTENT_GAP = 40;                      // 콘텐츠 요소 간 세로 간격 (px)
+
+// ============================================
+// 📱 모바일 설정 (768px 미만)
+// ============================================
+const MOBILE_CONTENT_PADDING_X = 16;         // 모바일 좌우 여백 (px)
+const MOBILE_CONTENT_GAP = 24;               // 모바일 콘텐츠 간격 (px)
+const MOBILE_TITLE_PADDING_TOP = 100;        // 모바일 상단 여백 (px)
+const MOBILE_MAIN_COPY_SIZE = 24;            // 모바일 메인 카피 크기 (px)
+const MOBILE_SUB_COPY_SIZE = 14;             // 모바일 서브 카피 크기 (px)
+const MOBILE_SECTION_PADDING_BOTTOM = 40;    // 모바일 하단 여백 (px)
 
 // ============================================
 // 📝 타이틀 그룹 설정 (메인카피 + 서브카피)
@@ -86,6 +96,15 @@ const getItemsAlign = (align: string) => {
 
 export default function ComplexPage() {
   const contentRef = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // 모바일 감지
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
   // 콘텐츠 진입 애니메이션
   useEffect(() => {
@@ -107,6 +126,14 @@ export default function ComplexPage() {
     }
   }, [])
 
+  // 반응형 값 계산
+  const paddingX = isMobile ? MOBILE_CONTENT_PADDING_X : CONTENT_PADDING_X
+  const contentGap = isMobile ? MOBILE_CONTENT_GAP : CONTENT_GAP
+  const titlePaddingTop = isMobile ? MOBILE_TITLE_PADDING_TOP : TITLE_GROUP_PADDING_TOP
+  const mainCopySize = isMobile ? MOBILE_MAIN_COPY_SIZE : MAIN_COPY_SIZE
+  const subCopySize = isMobile ? MOBILE_SUB_COPY_SIZE : SUB_COPY_SIZE
+  const sectionPaddingBottom = isMobile ? MOBILE_SECTION_PADDING_BOTTOM : SECTION_PADDING_BOTTOM
+
   return (
     <main className="min-h-screen font-sans flex flex-col" style={{ backgroundColor: SECTION_BG }}>
       <Header />
@@ -116,8 +143,8 @@ export default function ComplexPage() {
         className="relative flex flex-col items-center flex-1"
         style={{
           backgroundColor: SECTION_BG,
-          paddingTop: `${TITLE_GROUP_PADDING_TOP}px`,
-          paddingBottom: `${SECTION_PADDING_BOTTOM}px`,
+          paddingTop: `${titlePaddingTop}px`,
+          paddingBottom: `${sectionPaddingBottom}px`,
         }}
       >
         {/* 콘텐츠 컨테이너 */}
@@ -125,10 +152,10 @@ export default function ComplexPage() {
           ref={contentRef}
           className="w-full flex flex-col items-center"
           style={{
-            maxWidth: `${CONTENT_MAX_WIDTH}px`,
-            paddingLeft: `${CONTENT_PADDING_X}px`,
-            paddingRight: `${CONTENT_PADDING_X}px`,
-            gap: `${CONTENT_GAP}px`,
+            maxWidth: isMobile ? '100%' : `${CONTENT_MAX_WIDTH}px`,
+            paddingLeft: `${paddingX}px`,
+            paddingRight: `${paddingX}px`,
+            gap: `${contentGap}px`,
             opacity: ANIM_ENABLED ? 0 : 1,
           }}
         >
@@ -137,7 +164,7 @@ export default function ComplexPage() {
             <div
               className={`w-full flex flex-col ${getItemsAlign(TITLE_GROUP_ALIGN)}`}
               style={{
-                transform: `translate(${TITLE_GROUP_X}px, ${TITLE_GROUP_Y}px)`,
+                transform: isMobile ? 'none' : `translate(${TITLE_GROUP_X}px, ${TITLE_GROUP_Y}px)`,
                 textAlign: getTextAlign(TITLE_GROUP_ALIGN),
                 gap: `${COPY_GAP}px`,
               }}
@@ -146,12 +173,12 @@ export default function ComplexPage() {
               {MAIN_COPY_ENABLED && (
                 <h1
                   style={{
-                    fontSize: `${MAIN_COPY_SIZE}px`,
+                    fontSize: `${mainCopySize}px`,
                     fontWeight: MAIN_COPY_WEIGHT,
                     color: MAIN_COPY_COLOR,
                     letterSpacing: `${MAIN_COPY_LETTER_SPACING}px`,
                     lineHeight: MAIN_COPY_LINE_HEIGHT,
-                    transform: `translate(${MAIN_COPY_X}px, ${MAIN_COPY_Y}px)`,
+                    transform: isMobile ? 'none' : `translate(${MAIN_COPY_X}px, ${MAIN_COPY_Y}px)`,
                   }}
                 >
                   {MAIN_COPY}
@@ -162,12 +189,12 @@ export default function ComplexPage() {
               {SUB_COPY_ENABLED && (
                 <p
                   style={{
-                    fontSize: `${SUB_COPY_SIZE}px`,
+                    fontSize: `${subCopySize}px`,
                     fontWeight: SUB_COPY_WEIGHT,
                     color: SUB_COPY_COLOR,
                     letterSpacing: `${SUB_COPY_LETTER_SPACING}px`,
                     lineHeight: SUB_COPY_LINE_HEIGHT,
-                    transform: `translate(${SUB_COPY_X}px, ${SUB_COPY_Y}px)`,
+                    transform: isMobile ? 'none' : `translate(${SUB_COPY_X}px, ${SUB_COPY_Y}px)`,
                   }}
                 >
                   {SUB_COPY}

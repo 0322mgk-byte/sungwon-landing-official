@@ -181,7 +181,7 @@ export const POPUP_BUTTON_WIDTH = 120;                   // 팝업 버튼 너비
 // 💬 카카오톡 플로팅 버튼 설정
 // ============================================
 export const KAKAO_ENABLED = true;                       // 카카오톡 버튼 사용 여부
-export const KAKAO_URL = "https://open.kakao.com/o/sYpCdW6h";  // 카카오톡 오픈채팅 URL (변경 필요)
+export const KAKAO_URL = "https://open.kakao.com/o/sYpCdW6h";  // 카카오톡 오픈채팅 URL
 export const KAKAO_SIZE = 60;                            // 버튼 크기 (px)
 export const KAKAO_BOTTOM = 40;                         // 하단 여백 (px)
 export const KAKAO_LEFT = 30;                            // 좌측 여백 (px)

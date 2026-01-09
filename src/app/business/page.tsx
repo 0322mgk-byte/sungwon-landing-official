@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
@@ -18,6 +18,18 @@ import {
   CONTENT_MAX_WIDTH,
   CONTENT_PADDING_X,
   CONTENT_GAP,
+  MOBILE_CONTENT_PADDING_X,
+  MOBILE_CONTENT_GAP,
+  MOBILE_TITLE_PADDING_TOP,
+  MOBILE_MAIN_COPY_SIZE,
+  MOBILE_SUB_COPY_SIZE,
+  MOBILE_TABLE_FONT_SIZE,
+  MOBILE_TABLE_HEADER_WIDTH,
+  MOBILE_TABLE_ROW_HEIGHT,
+  MOBILE_SECTION_PADDING_BOTTOM,
+  MOBILE_ZOOM_HINT_TEXT,
+  MOBILE_ZOOM_HINT_SIZE,
+  MOBILE_ZOOM_HINT_COLOR,
   TITLE_GROUP_ENABLED,
   TITLE_GROUP_X,
   TITLE_GROUP_Y,
@@ -73,6 +85,15 @@ const getItemsAlign = (align: string) => {
 
 export default function BusinessPage() {
   const contentRef = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // 모바일 감지
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
   // 콘텐츠 진입 애니메이션
   useEffect(() => {
@@ -94,6 +115,17 @@ export default function BusinessPage() {
     }
   }, [])
 
+  // 반응형 값 계산
+  const paddingX = isMobile ? MOBILE_CONTENT_PADDING_X : CONTENT_PADDING_X
+  const contentGap = isMobile ? MOBILE_CONTENT_GAP : CONTENT_GAP
+  const titlePaddingTop = isMobile ? MOBILE_TITLE_PADDING_TOP : TITLE_GROUP_PADDING_TOP
+  const mainCopySize = isMobile ? MOBILE_MAIN_COPY_SIZE : MAIN_COPY_SIZE
+  const subCopySize = isMobile ? MOBILE_SUB_COPY_SIZE : SUB_COPY_SIZE
+  const tableFontSize = isMobile ? MOBILE_TABLE_FONT_SIZE : TABLE_FONT_SIZE
+  const tableHeaderWidth = isMobile ? MOBILE_TABLE_HEADER_WIDTH : TABLE_HEADER_WIDTH
+  const tableRowHeight = isMobile ? MOBILE_TABLE_ROW_HEIGHT : TABLE_ROW_HEIGHT
+  const sectionPaddingBottom = isMobile ? MOBILE_SECTION_PADDING_BOTTOM : SECTION_PADDING_BOTTOM
+
   return (
     <main className="min-h-screen font-sans flex flex-col" style={{ backgroundColor: SECTION_BG }}>
       <Header />
@@ -103,8 +135,8 @@ export default function BusinessPage() {
         className="relative flex flex-col items-center flex-1"
         style={{
           backgroundColor: SECTION_BG,
-          paddingTop: `${TITLE_GROUP_PADDING_TOP}px`,
-          paddingBottom: `${SECTION_PADDING_BOTTOM}px`,
+          paddingTop: `${titlePaddingTop}px`,
+          paddingBottom: `${sectionPaddingBottom}px`,
         }}
       >
         {/* 콘텐츠 컨테이너 - 모든 요소가 이 안에 배치됨 */}
@@ -112,10 +144,10 @@ export default function BusinessPage() {
           ref={contentRef}
           className="w-full flex flex-col items-center"
           style={{
-            maxWidth: `${CONTENT_MAX_WIDTH}px`,
-            paddingLeft: `${CONTENT_PADDING_X}px`,
-            paddingRight: `${CONTENT_PADDING_X}px`,
-            gap: `${CONTENT_GAP}px`,
+            maxWidth: isMobile ? '100%' : `${CONTENT_MAX_WIDTH}px`,
+            paddingLeft: `${paddingX}px`,
+            paddingRight: `${paddingX}px`,
+            gap: `${contentGap}px`,
             opacity: ANIM_ENABLED ? 0 : 1,
           }}
         >
@@ -124,7 +156,7 @@ export default function BusinessPage() {
             <div
               className={`w-full flex flex-col ${getItemsAlign(TITLE_GROUP_ALIGN)}`}
               style={{
-                transform: `translate(${TITLE_GROUP_X}px, ${TITLE_GROUP_Y}px)`,
+                transform: isMobile ? 'none' : `translate(${TITLE_GROUP_X}px, ${TITLE_GROUP_Y}px)`,
                 textAlign: getTextAlign(TITLE_GROUP_ALIGN),
                 gap: `${COPY_GAP}px`,
               }}
@@ -133,12 +165,12 @@ export default function BusinessPage() {
               {MAIN_COPY_ENABLED && (
                 <h1
                   style={{
-                    fontSize: `${MAIN_COPY_SIZE}px`,
+                    fontSize: `${mainCopySize}px`,
                     fontWeight: MAIN_COPY_WEIGHT,
                     color: MAIN_COPY_COLOR,
                     letterSpacing: `${MAIN_COPY_LETTER_SPACING}px`,
                     lineHeight: MAIN_COPY_LINE_HEIGHT,
-                    transform: `translate(${MAIN_COPY_X}px, ${MAIN_COPY_Y}px)`,
+                    transform: isMobile ? 'none' : `translate(${MAIN_COPY_X}px, ${MAIN_COPY_Y}px)`,
                   }}
                 >
                   {MAIN_COPY}
@@ -149,12 +181,12 @@ export default function BusinessPage() {
               {SUB_COPY_ENABLED && (
                 <p
                   style={{
-                    fontSize: `${SUB_COPY_SIZE}px`,
+                    fontSize: `${subCopySize}px`,
                     fontWeight: SUB_COPY_WEIGHT,
                     color: SUB_COPY_COLOR,
                     letterSpacing: `${SUB_COPY_LETTER_SPACING}px`,
                     lineHeight: SUB_COPY_LINE_HEIGHT,
-                    transform: `translate(${SUB_COPY_X}px, ${SUB_COPY_Y}px)`,
+                    transform: isMobile ? 'none' : `translate(${SUB_COPY_X}px, ${SUB_COPY_Y}px)`,
                   }}
                 >
                   {SUB_COPY}
@@ -175,9 +207,9 @@ export default function BusinessPage() {
 
           {/* 사업개요 표 */}
           {TABLE_ENABLED && (
-            <table className="w-full border-collapse" style={{ fontSize: `${TABLE_FONT_SIZE}px`, tableLayout: 'fixed' }}>
+            <table className="w-full border-collapse" style={{ fontSize: `${tableFontSize}px`, tableLayout: 'fixed' }}>
               <colgroup>
-                <col style={{ width: `${TABLE_HEADER_WIDTH}px` }} />
+                <col style={{ width: `${tableHeaderWidth}px` }} />
                 <col />
               </colgroup>
               <tbody>
@@ -192,13 +224,13 @@ export default function BusinessPage() {
                     {/* 라벨 (헤더) */}
                     <td
                       style={{
-                        minHeight: `${TABLE_ROW_HEIGHT}px`,
-                        height: `${TABLE_ROW_HEIGHT}px`,
+                        minHeight: `${tableRowHeight}px`,
+                        height: `${tableRowHeight}px`,
                         backgroundColor: TABLE_HEADER_BG,
                         color: TABLE_HEADER_COLOR,
                         fontWeight: TABLE_HEADER_WEIGHT,
-                        paddingLeft: '16px',
-                        paddingRight: '8px',
+                        paddingLeft: isMobile ? '10px' : '16px',
+                        paddingRight: isMobile ? '6px' : '8px',
                         borderLeft: `3px solid ${TABLE_ACCENT_COLOR}`,
                         verticalAlign: 'middle',
                       }}
@@ -208,13 +240,13 @@ export default function BusinessPage() {
                     {/* 내용 */}
                     <td
                       style={{
-                        minHeight: `${TABLE_ROW_HEIGHT}px`,
+                        minHeight: `${tableRowHeight}px`,
                         color: TABLE_CONTENT_COLOR,
                         fontWeight: TABLE_CONTENT_WEIGHT,
-                        paddingLeft: '24px',
-                        paddingRight: '16px',
-                        paddingTop: '12px',
-                        paddingBottom: '12px',
+                        paddingLeft: isMobile ? '12px' : '24px',
+                        paddingRight: isMobile ? '10px' : '16px',
+                        paddingTop: isMobile ? '8px' : '12px',
+                        paddingBottom: isMobile ? '8px' : '12px',
                         borderLeft: `1px solid ${TABLE_BORDER_COLOR}`,
                         borderRight: `1px solid ${TABLE_BORDER_COLOR}`,
                         wordBreak: 'break-word',
@@ -228,6 +260,20 @@ export default function BusinessPage() {
                 ))}
               </tbody>
             </table>
+          )}
+
+          {/* 모바일 확대 안내 문구 */}
+          {isMobile && (
+            <p
+              className="text-center w-full"
+              style={{
+                fontSize: `${MOBILE_ZOOM_HINT_SIZE}px`,
+                color: MOBILE_ZOOM_HINT_COLOR,
+                marginTop: '8px',
+              }}
+            >
+              {MOBILE_ZOOM_HINT_TEXT}
+            </p>
           )}
 
         </div>

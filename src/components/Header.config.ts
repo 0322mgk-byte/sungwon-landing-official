@@ -41,6 +41,12 @@ export const NAV_GAP = 100;                          // 메뉴 사이 간격 (px
 // 네비게이션 메뉴 항목 (서브메뉴 포함)
 export const NAV_ITEMS = [
   {
+    label: "Home",
+    href: "/",
+    subItems: [],
+    mobileOnly: true,              // 모바일 메뉴에서만 표시
+  },
+  {
     label: "사업안내",
     href: "/business",
     subItems: [
@@ -51,6 +57,7 @@ export const NAV_ITEMS = [
     label: "입지환경",
     href: "/premium",
     subItems: [
+      { label: "입지환경", href: "/premium" },
       { label: "프리미엄", href: "/premium/premium" },
     ]
   },
@@ -152,7 +159,7 @@ export const PHONE_BLINK_DURATION = 0.8;            // 깜빡임 속도 (초) - 
 // ============================================
 export const MOBILE_HEADER_BG = "rgb(0, 32, 70)";         // 모바일 헤더 배경색 (네이비) - rgba(R,G,B,투명도 0~1)
 export const MOBILE_LOGO_SRC = "/sungwon-mobile-logo1.png"; // 모바일 로고 이미지 경로 (public 폴더)
-export const MOBILE_LOGO_SIZE = 43;                        // 모바일 로고 크기 (px)
+export const MOBILE_LOGO_SIZE = 39;                        // 모바일 로고 크기 (px)
 
 // ============================================
 // 📱 모바일 메뉴 설정

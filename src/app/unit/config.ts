@@ -18,3 +18,11 @@ export const SECTION_PADDING_BOTTOM = 80;           // 섹션 하단 여백 (px)
 export const CONTENT_MAX_WIDTH = 800;               // 콘텐츠 최대 너비 (px)
 export const CONTENT_PADDING_X = 20;                // 좌우 여백 (px)
 export const CONTENT_GAP = 40;                      // 콘텐츠 요소 간 세로 간격 (px)
+
+// ============================================
+// 📱 모바일 설정 (768px 미만)
+// ============================================
+export const MOBILE_CONTENT_PADDING_X = 16;         // 모바일 좌우 여백 (px)
+export const MOBILE_CONTENT_GAP = 24;               // 모바일 콘텐츠 간격 (px)
+export const MOBILE_SECTION_PADDING_TOP = 100;      // 모바일 상단 여백 (px)
+export const MOBILE_SECTION_PADDING_BOTTOM = 40;    // 모바일 하단 여백 (px)
