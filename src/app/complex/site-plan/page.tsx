@@ -5,6 +5,8 @@ import { gsap } from "gsap"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import Image from "next/image"
+import Lottie from "lottie-react"
+import pinchZoomAnimation from "../../../../public/pinch-zoom.json"
 
 // 설정값 import (config.ts에서 값 수정 가능)
 import {
@@ -190,18 +192,28 @@ export default function ComplexLayoutPage() {
             />
           )}
 
-          {/* 모바일 확대 안내 문구 */}
+          {/* 모바일 확대 안내 문구 + 핀치 줌 애니메이션 */}
           {isMobile && (
-            <p
-              className="text-center w-full"
-              style={{
-                fontSize: `${MOBILE_ZOOM_HINT_SIZE}px`,
-                color: MOBILE_ZOOM_HINT_COLOR,
-                marginTop: '8px',
-              }}
+            <div
+              className="flex flex-col items-center w-full"
+              style={{ marginTop: '16px', gap: '4px' }}
             >
-              {MOBILE_ZOOM_HINT_TEXT}
-            </p>
+              {/* Lottie 핀치 줌 애니메이션 */}
+              <Lottie
+                animationData={pinchZoomAnimation}
+                loop={true}
+                style={{ width: '56px', height: '56px' }}
+              />
+              <p
+                className="text-center"
+                style={{
+                  fontSize: `${MOBILE_ZOOM_HINT_SIZE}px`,
+                  color: MOBILE_ZOOM_HINT_COLOR,
+                }}
+              >
+                {MOBILE_ZOOM_HINT_TEXT}
+              </p>
+            </div>
           )}
 
         </div>

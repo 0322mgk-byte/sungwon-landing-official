@@ -5,6 +5,8 @@ import { gsap } from "gsap"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import Image from "next/image"
+import Lottie from "lottie-react"
+import pinchZoomAnimation from "../../../../public/pinch-zoom.json"
 
 // 설정값 import (config.ts에서 값 수정 가능)
 import {
@@ -74,6 +76,50 @@ const getItemsAlign = (align: string) => {
   if (align === "right") return "items-end";
   return "items-start";
 };
+
+// 커뮤니티 시설 데이터
+const COMMUNITY_FACILITIES = [
+  {
+    title: "피트니스센터",
+    location: "지하",
+    description: "체력단련 및 활력 넘치는 생활을 위해 마련된 운동 공간"
+  },
+  {
+    title: "어린이집",
+    location: "지상",
+    description: "어린 자녀를 안심하고 맡길 수 있는 든든한 단지 내 보육시설"
+  },
+  {
+    title: "실내골프연습장",
+    location: "지하",
+    description: "날씨나 계절에 상관없이 골프를 즐기는 실내골프연습장"
+  },
+  {
+    title: "경로당",
+    location: "지상",
+    description: "어르신들이 휴식을 취하거나 소모임을 즐기는 여유로운 특화 공간"
+  },
+  {
+    title: "공용세탁장",
+    location: "지하",
+    description: "대형 세탁물을 멀리 가지 않고 단지내에서 편리하게 세탁할 수 있는 공간"
+  },
+  {
+    title: "주민카페",
+    location: "지상",
+    description: "단지내 주민들이 함께 휴식을 취할 수 있는 쾌적 공간"
+  },
+  {
+    title: "작은도서관",
+    location: "",
+    description: "아이들이 함께 책을 읽고 공부하며 꿈을 키워가는 행복 공간"
+  },
+  {
+    title: "맘스스테이션",
+    location: "",
+    description: "아이들의 안전과 부모님의 편의를 위한 어린이 승하차장"
+  },
+];
 
 export default function CommunityPage() {
   const contentRef = useRef<HTMLDivElement>(null)
@@ -203,18 +249,96 @@ export default function CommunityPage() {
             </>
           )}
 
-          {/* 모바일 확대 안내 문구 */}
+          {/* 커뮤니티 시설 안내 - PC: 이미지 / 모바일: 컴포넌트 */}
+          {!isMobile ? (
+            <Image
+              src="/community2.jpg"
+              alt="커뮤니티 시설 안내"
+              width={1920}
+              height={1080}
+              className="w-full h-auto"
+            />
+          ) : (
+            <div className="w-full flex flex-col gap-4 mt-4">
+              {COMMUNITY_FACILITIES.map((facility, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-3"
+                  style={{ paddingLeft: '4px' }}
+                >
+                  {/* 파란색 왼쪽 바 */}
+                  <div
+                    style={{
+                      width: '3px',
+                      minHeight: '100%',
+                      backgroundColor: '#4A7CC9',
+                      borderRadius: '2px',
+                      alignSelf: 'stretch',
+                    }}
+                  />
+                  {/* 텍스트 영역 */}
+                  <div className="flex flex-col gap-1">
+                    {/* 제목 + 위치 */}
+                    <h3
+                      style={{
+                        fontSize: '15px',
+                        fontWeight: 600,
+                        color: '#333',
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      {facility.title}
+                      {facility.location && (
+                        <span
+                          style={{
+                            fontSize: '12px',
+                            fontWeight: 400,
+                            color: '#888',
+                            marginLeft: '4px',
+                          }}
+                        >
+                          ({facility.location})
+                        </span>
+                      )}
+                    </h3>
+                    {/* 설명 */}
+                    <p
+                      style={{
+                        fontSize: '13px',
+                        fontWeight: 400,
+                        color: '#666',
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      {facility.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* 모바일 확대 안내 문구 + 핀치 줌 애니메이션 */}
           {isMobile && (
-            <p
-              className="text-center w-full"
-              style={{
-                fontSize: `${MOBILE_ZOOM_HINT_SIZE}px`,
-                color: MOBILE_ZOOM_HINT_COLOR,
-                marginTop: '8px',
-              }}
+            <div
+              className="flex flex-col items-center w-full"
+              style={{ marginTop: '16px', gap: '4px' }}
             >
-              {MOBILE_ZOOM_HINT_TEXT}
-            </p>
+              <Lottie
+                animationData={pinchZoomAnimation}
+                loop={true}
+                style={{ width: '56px', height: '56px' }}
+              />
+              <p
+                className="text-center"
+                style={{
+                  fontSize: `${MOBILE_ZOOM_HINT_SIZE}px`,
+                  color: MOBILE_ZOOM_HINT_COLOR,
+                }}
+              >
+                {MOBILE_ZOOM_HINT_TEXT}
+              </p>
+            </div>
           )}
 
         </div>

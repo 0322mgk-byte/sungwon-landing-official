@@ -5,6 +5,8 @@ import { gsap } from "gsap"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import Image from "next/image"
+import Lottie from "lottie-react"
+import pinchZoomAnimation from "../../../../public/pinch-zoom.json"
 
 // 설정값 import (config.ts에서 값 수정 가능)
 import {
@@ -24,7 +26,6 @@ import {
   MOBILE_MAIN_COPY_SIZE,
   MOBILE_SUB_COPY_SIZE,
   MOBILE_SECTION_PADDING_BOTTOM,
-  MOBILE_CARD_GRID_COLUMNS,
   MOBILE_ZOOM_HINT_TEXT,
   MOBILE_ZOOM_HINT_SIZE,
   MOBILE_ZOOM_HINT_COLOR,
@@ -52,33 +53,6 @@ import {
   SUB_COPY_X,
   SUB_COPY_Y,
   COPY_GAP,
-  CARD_GRID_ENABLED,
-  CARD_GRID_COLUMNS,
-  CARD_GRID_GAP_X,
-  CARD_GRID_GAP_Y,
-  CARD_MAX_WIDTH,
-  CARD_FRAME_ASPECT_RATIO,
-  CARD_FRAME_BG,
-  CARD_BG_COLOR,
-  CARD_BORDER_COLOR,
-  CARD_BORDER_WIDTH,
-  CARD_BORDER_RADIUS,
-  CARD_SHADOW,
-  CARD_PADDING,
-  CARD_LABEL_SIZE,
-  CARD_LABEL_WEIGHT,
-  CARD_LABEL_COLOR,
-  CARD_LABEL_FONT,
-  CARD_LINE_ENABLED,
-  CARD_LINE_WIDTH,
-  CARD_LINE_HEIGHT,
-  CARD_LINE_COLOR,
-  CARD_LINE_GAP,
-  CARD_TEXT_INDENT,
-  CARD_TITLE_SIZE,
-  CARD_TITLE_WEIGHT,
-  CARD_TITLE_COLOR,
-  PREMIUM_CARDS,
 } from "./config"
 
 // 정렬 헬퍼 함수
@@ -133,7 +107,6 @@ export default function PremiumDetailPage() {
   const mainCopySize = isMobile ? MOBILE_MAIN_COPY_SIZE : MAIN_COPY_SIZE
   const subCopySize = isMobile ? MOBILE_SUB_COPY_SIZE : SUB_COPY_SIZE
   const sectionPaddingBottom = isMobile ? MOBILE_SECTION_PADDING_BOTTOM : SECTION_PADDING_BOTTOM
-  const cardGridColumns = isMobile ? MOBILE_CARD_GRID_COLUMNS : CARD_GRID_COLUMNS
 
   return (
     <main className="min-h-screen font-sans flex flex-col" style={{ backgroundColor: SECTION_BG }}>
@@ -204,124 +177,36 @@ export default function PremiumDetailPage() {
             </div>
           )}
 
-          {/* 프리미엄 카드 그리드 섹션 */}
-          {CARD_GRID_ENABLED && (
-            <div
-              className="w-full grid justify-items-center"
-              style={{
-                gridTemplateColumns: `repeat(${cardGridColumns}, 1fr)`,
-                gap: `${CARD_GRID_GAP_Y}px ${CARD_GRID_GAP_X}px`,
-              }}
-            >
-              {PREMIUM_CARDS.map((card, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col overflow-hidden w-full"
-                  style={{
-                    maxWidth: `${CARD_MAX_WIDTH}px`,
-                    backgroundColor: CARD_BG_COLOR,
-                    border: `${CARD_BORDER_WIDTH}px solid ${CARD_BORDER_COLOR}`,
-                    borderRadius: `${CARD_BORDER_RADIUS}px`,
-                    boxShadow: CARD_SHADOW,
-                  }}
-                >
-                  {/* 넘버 라벨 + 가로선 (상단) */}
-                  <div
-                    className="flex items-center"
-                    style={{
-                      padding: `${CARD_PADDING}px`,
-                      paddingLeft: `${CARD_PADDING + CARD_TEXT_INDENT}px`,
-                      paddingBottom: '8px',
-                      gap: `${CARD_LINE_GAP}px`,
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: `${CARD_LABEL_SIZE}px`,
-                        fontWeight: CARD_LABEL_WEIGHT,
-                        fontFamily: CARD_LABEL_FONT,
-                        color: CARD_LABEL_COLOR,
-                      }}
-                    >
-                      {card.label}
-                    </span>
-                    {CARD_LINE_ENABLED && (
-                      <div
-                        style={{
-                          width: `${CARD_LINE_WIDTH}px`,
-                          height: `${CARD_LINE_HEIGHT}px`,
-                          backgroundColor: CARD_LINE_COLOR,
-                        }}
-                      />
-                    )}
-                  </div>
+          {/* 프리미엄 이미지 */}
+          <Image
+            src="/premium1.jpg"
+            alt="프리미엄 정보"
+            width={1920}
+            height={2400}
+            className="w-full h-auto"
+          />
 
-                  {/* 미디어 프레임 (16:9 비율) */}
-                  <div
-                    className="relative overflow-hidden"
-                    style={{
-                      width: '100%',
-                      aspectRatio: CARD_FRAME_ASPECT_RATIO,
-                      backgroundColor: CARD_FRAME_BG,
-                    }}
-                  >
-                    {card.mediaType === 'image' && (
-                      <Image
-                        src={card.mediaSrc}
-                        alt={card.title}
-                        fill
-                        className="object-cover"
-                        priority={index < 4}
-                      />
-                    )}
-                    {card.mediaType === 'video' && (
-                      <video
-                        src={card.mediaSrc}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-full object-cover"
-                      />
-                    )}
-                  </div>
-
-                  {/* 타이틀 (하단) */}
-                  <div
-                    style={{
-                      padding: `${CARD_PADDING}px`,
-                      paddingLeft: `${CARD_PADDING + CARD_TEXT_INDENT}px`,
-                      paddingTop: '12px',
-                    }}
-                  >
-                    <h3
-                      style={{
-                        fontSize: `${CARD_TITLE_SIZE}px`,
-                        fontWeight: CARD_TITLE_WEIGHT,
-                        color: CARD_TITLE_COLOR,
-                        textAlign: 'left',
-                      }}
-                    >
-                      {card.title}
-                    </h3>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* 모바일 확대 안내 문구 */}
+          {/* 모바일 확대 안내 문구 + 핀치 줌 애니메이션 */}
           {isMobile && (
-            <p
-              className="text-center w-full"
-              style={{
-                fontSize: `${MOBILE_ZOOM_HINT_SIZE}px`,
-                color: MOBILE_ZOOM_HINT_COLOR,
-                marginTop: '8px',
-              }}
+            <div
+              className="flex flex-col items-center w-full"
+              style={{ marginTop: '16px', gap: '4px' }}
             >
-              {MOBILE_ZOOM_HINT_TEXT}
-            </p>
+              <Lottie
+                animationData={pinchZoomAnimation}
+                loop={true}
+                style={{ width: '56px', height: '56px' }}
+              />
+              <p
+                className="text-center"
+                style={{
+                  fontSize: `${MOBILE_ZOOM_HINT_SIZE}px`,
+                  color: MOBILE_ZOOM_HINT_COLOR,
+                }}
+              >
+                {MOBILE_ZOOM_HINT_TEXT}
+              </p>
+            </div>
           )}
 
         </div>
