@@ -193,7 +193,7 @@ export default function Hero() {
       >
         {/* 메인 이미지 */}
         <Image
-          src="/black-main.png"
+          src="/mobile-body (1).png"
           alt="군산 성원상떼빌"
           width={isMobile ? 220 : 320}
           height={0}
