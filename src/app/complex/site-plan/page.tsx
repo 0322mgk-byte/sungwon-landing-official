@@ -198,7 +198,6 @@ export default function ComplexLayoutPage() {
               className="flex flex-col items-center w-full"
               style={{ marginTop: '16px', gap: '4px' }}
             >
-              {/* Lottie 핀치 줌 애니메이션 */}
               <Lottie
                 animationData={pinchZoomAnimation}
                 loop={true}

@@ -6,6 +6,26 @@ import ViewportMeta from "@/components/ViewportMeta";
 export const metadata: Metadata = {
   title: "성원상떼빌 - 프리미엄 라이프의 시작",
   description: "군산 지곡동 성원상떼빌 공식 랜딩페이지",
+  openGraph: {
+    title: "성원상떼빌 - 프리미엄 라이프의 시작",
+    description: "군산 지곡동 성원상떼빌 공식 랜딩페이지",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "성원상떼빌",
+      },
+    ],
+    type: "website",
+    locale: "ko_KR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "성원상떼빌 - 프리미엄 라이프의 시작",
+    description: "군산 지곡동 성원상떼빌 공식 랜딩페이지",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({
