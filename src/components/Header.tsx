@@ -418,7 +418,7 @@ export default function Header() {
                 )}
                 {/* 서브메뉴 항목들 */}
                 <div className="flex flex-col items-center" style={{ gap: `${DROPDOWN_ITEM_GAP}px` }}>
-                  {item.subItems.map((subItem, subIndex) => (
+                  {item.subItems.filter(subItem => !subItem.mobileOnly).map((subItem, subIndex) => (
                     <Link
                       key={subIndex}
                       href={subItem.href}
@@ -474,18 +474,20 @@ export default function Header() {
                 {/* 메인 메뉴 항목 */}
                 {item.subItems.length > 0 ? (
                   <button
-                    className="w-full flex items-center justify-center transition-colors font-medium"
+                    className="w-full flex items-center justify-between transition-colors font-medium"
                     style={{
                       color: MOBILE_MENU_TEXT_COLOR,
                       paddingTop: `${MOBILE_MENU_ITEM_GAP}px`,
                       paddingBottom: `${MOBILE_MENU_ITEM_GAP}px`,
+                      paddingLeft: '36px',
+                      paddingRight: '36px',
                     }}
                     onClick={() => setOpenSubMenu(openSubMenu === index ? null : index)}
                   >
                     <span>{item.label}</span>
                     <ChevronDown
                       size={18}
-                      className="ml-1 transition-transform"
+                      className="transition-transform"
                       style={{
                         transform: openSubMenu === index ? 'rotate(180deg)' : 'rotate(0deg)',
                       }}
@@ -494,11 +496,12 @@ export default function Header() {
                 ) : (
                   <Link
                     href={item.href}
-                    className="block text-center transition-colors font-medium"
+                    className="block text-left transition-colors font-medium"
                     style={{
                       color: MOBILE_MENU_TEXT_COLOR,
                       paddingTop: `${MOBILE_MENU_ITEM_GAP}px`,
                       paddingBottom: `${MOBILE_MENU_ITEM_GAP}px`,
+                      paddingLeft: '36px',
                     }}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -519,12 +522,13 @@ export default function Header() {
                       <Link
                         key={subIndex}
                         href={subItem.href}
-                        className="block text-center transition-colors"
+                        className="block text-left transition-colors"
                         style={{
                           color: DROPDOWN_ITEM_COLOR,
                           fontSize: `${DROPDOWN_ITEM_SIZE}px`,
                           paddingTop: '8px',
                           paddingBottom: '8px',
+                          paddingLeft: '40px',
                         }}
                         onClick={() => {
                           setIsMenuOpen(false)

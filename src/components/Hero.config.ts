@@ -62,3 +62,34 @@ export const IMAGE_START_Y = -8       // 시작 상하 이동 (%)
 // ============================================
 export const IMAGE_ANIM_DURATION = 3   // 애니메이션 시간 (초)
 export const IMAGE_ANIM_EASE = "power3.inOut"  // 이징: power1~4 + .in / .out / .inOut
+
+// ============================================
+// 🔗 빠른 네비게이션 버튼 설정
+// ============================================
+export const QUICK_NAV_ENABLED = true           // 빠른 네비게이션 버튼 사용 여부
+export const QUICK_NAV_POSITION_Y = 20          // 상단에서의 거리 (px)
+export const QUICK_NAV_MOBILE_POSITION_Y = 90   // 모바일에서 상단에서의 거리 (px)
+export const QUICK_NAV_GAP = 12                 // 버튼 사이 간격 (px)
+export const QUICK_NAV_MOBILE_GAP = 8           // 모바일 버튼 사이 간격 (px)
+
+// 버튼 스타일
+export const QUICK_NAV_BTN_BG = "rgba(255,255,255,0.95)"        // 버튼 배경색
+export const QUICK_NAV_BTN_HOVER_BG = "rgba(0,28,61,1)"         // 호버 시 배경색
+export const QUICK_NAV_BTN_COLOR = "rgba(0,28,61,1)"            // 글자색
+export const QUICK_NAV_BTN_HOVER_COLOR = "rgba(255,255,255,1)"  // 호버 시 글자색
+export const QUICK_NAV_BTN_PADDING_X = 20       // 버튼 좌우 패딩 (px)
+export const QUICK_NAV_BTN_PADDING_Y = 12       // 버튼 상하 패딩 (px)
+export const QUICK_NAV_BTN_MOBILE_PADDING_X = 14 // 모바일 좌우 패딩 (px)
+export const QUICK_NAV_BTN_MOBILE_PADDING_Y = 10 // 모바일 상하 패딩 (px)
+export const QUICK_NAV_BTN_RADIUS = 8           // 버튼 둥글기 (px)
+export const QUICK_NAV_BTN_FONT_SIZE = 14       // 글자 크기 (px)
+export const QUICK_NAV_BTN_MOBILE_FONT_SIZE = 12 // 모바일 글자 크기 (px)
+export const QUICK_NAV_BTN_FONT_WEIGHT = 600    // 글자 굵기
+
+// 버튼 항목 (label: 표시 텍스트, href: 이동 경로)
+export const QUICK_NAV_ITEMS = [
+  { label: "방문예약", href: "/reservation" },
+  { label: "블로그", href: "/media/blog" },
+  { label: "유튜브", href: "/media/youtube" },
+  { label: "인스타그램", href: "/media/instagram" },
+]

@@ -1,0 +1,7 @@
+# 대용량 비디오 파일 제외
+public/*.mov
+public/*.mkv
+public/Proxy/
+
+# 기타
+nul

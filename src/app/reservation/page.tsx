@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
+import QuickNav from "@/components/QuickNav"
 import Image from "next/image"
 
 // 설정값 import (config.ts에서 값 수정 가능)
@@ -242,6 +243,9 @@ export default function ReservationPage() {
           paddingBottom: `${SECTION_PADDING_BOTTOM}px`,
         }}
       >
+        {/* 빠른 네비게이션 버튼 */}
+        <QuickNav />
+
         {/* 콘텐츠 컨테이너 */}
         <div
           className="w-full flex flex-col items-center"

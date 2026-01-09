@@ -81,7 +81,12 @@ export const NAV_ITEMS = [
   {
     label: "방문예약",
     href: "/reservation",
-    subItems: []
+    subItems: [
+      { label: "방문예약", href: "/reservation" },
+      { label: "블로그", href: "/media/blog" },
+      { label: "유튜브 영상", href: "/media/youtube" },
+      { label: "인스타그램", href: "/media/instagram" },
+    ]
   },
 ];
 
@@ -90,7 +95,7 @@ export const NAV_ITEMS = [
 // ============================================
 export const DROPDOWN_ENABLED = true;                        // 드롭다운 메뉴 사용 여부
 export const DROPDOWN_BG = "rgba(245,245,245,1)";            // 드롭다운 배경색 - rgba(R,G,B,투명도 0~1)
-export const DROPDOWN_HEIGHT = 180;                          // 드롭다운 높이 (px)
+export const DROPDOWN_HEIGHT = 210;                          // 드롭다운 높이 (px)
 export const DROPDOWN_BORDER_COLOR = "rgba(230,230,230,1)";  // 드롭다운 테두리 색상
 export const DROPDOWN_ANIM_DURATION = 0.3;                   // 드롭다운 애니메이션 시간 (초)
 export const DROPDOWN_PADDING_TOP = 24;                      // 드롭다운 상단 여백 (px)
