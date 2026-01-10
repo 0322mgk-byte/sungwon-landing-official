@@ -33,8 +33,10 @@ export const MOBILE_YOUTUBE_Y = 10.5        // 모바일 상하 이동 (%)
 // ============================================
 // 📐 히어로 섹션 레이아웃
 // ============================================
-export const HERO_HEIGHT = "90vh"      // PC 히어로 섹션 높이
-export const MOBILE_HERO_HEIGHT = "43vh" // 모바일 히어로 섹션 높이
+// svh = Small Viewport Height (브라우저 UI가 표시된 상태 기준)
+// 카카오톡 인앱 브라우저, 일반 브라우저 등에서 일관된 높이 유지
+export const HERO_HEIGHT = "90svh"      // PC 히어로 섹션 높이
+export const MOBILE_HERO_HEIGHT = "43svh" // 모바일 히어로 섹션 높이
 export const HERO_BG = "rgba(0,0,0,1)" // 배경색 - rgba(R,G,B,투명도 0~1)
 
 // ============================================

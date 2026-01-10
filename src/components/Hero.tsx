@@ -83,7 +83,7 @@ export default function Hero() {
     return (
       <section
         className="relative flex items-center justify-center overflow-hidden"
-        style={{ height: '100vh', backgroundColor: HERO_BG }}
+        style={{ height: '100svh', backgroundColor: HERO_BG }}
       />
     )
   }
