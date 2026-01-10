@@ -43,6 +43,17 @@ export default function Home() {
                 transform: rotate(360deg);
               }
             }
+            @keyframes float {
+              0%, 100% {
+                transform: translateY(0px);
+              }
+              50% {
+                transform: translateY(-5px);
+              }
+            }
+            .floating-bubble {
+              animation: float 2.5s ease-in-out infinite;
+            }
           `}</style>
 
           {/* 메인 이미지 */}
@@ -59,18 +70,37 @@ export default function Home() {
             }}
           />
 
-          {/* 중간 좌측 텍스트 */}
+          {/* 말풍선 텍스트 */}
           <div
+            className="floating-bubble"
             style={{
               position: 'absolute',
-              left: '19%',
+              left: '12%',
               top: '32%',
+              backgroundColor: 'rgba(255, 255, 255, 1)',
+              borderRadius: '20px',
+              padding: '14px 20px',
+              boxShadow: '0 6px 20px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2)',
               textAlign: 'left',
             }}
           >
+            {/* 말풍선 꼬리 (오른쪽 하단 - 캐릭터 방향) */}
             <div
               style={{
-                fontSize: '20px',
+                position: 'absolute',
+                right: '-10px',
+                bottom: '12px',
+                width: 0,
+                height: 0,
+                borderTop: '8px solid transparent',
+                borderBottom: '8px solid transparent',
+                borderLeft: '12px solid rgba(255, 255, 255, 1)',
+                filter: 'drop-shadow(2px 0 2px rgba(0, 0, 0, 0.1))',
+              }}
+            />
+            <div
+              style={{
+                fontSize: '18px',
                 fontWeight: 500,
                 color: 'rgba(0, 0, 0, 1)',
                 lineHeight: 1.4,
@@ -80,7 +110,7 @@ export default function Home() {
             </div>
             <div
               style={{
-                fontSize: '26px',
+                fontSize: '24px',
                 fontWeight: 800,
                 color: 'rgb(243, 115, 32)',
                 lineHeight: 1.4,
@@ -96,7 +126,7 @@ export default function Home() {
               position: 'absolute',
               left: '29%',
               transform: 'translateX(-50%)',
-              top: '56%',
+              top: '61%',
               width: '120px',
               height: '120px',
             }}
@@ -151,8 +181,8 @@ export default function Home() {
             >
               <div
                 style={{
-                  fontSize: '11px',
-                  fontWeight: 700,
+                  fontSize: '12px',
+                  fontWeight: 900,
                   color: 'rgb(243, 115, 32)',
                   lineHeight: 1.3,
                 }}
@@ -161,8 +191,8 @@ export default function Home() {
               </div>
               <div
                 style={{
-                  fontSize: '11px',
-                  fontWeight: 700,
+                  fontSize: '12px',
+                  fontWeight: 900,
                   color: 'rgba(0, 0, 0, 1)',
                   lineHeight: 1.3,
                 }}
