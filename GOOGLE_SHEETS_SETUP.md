@@ -141,9 +141,139 @@ npm run dev
 
 ---
 
-## 7. 배포 시 주의사항
+## 7. Vercel 배포 시 환경 변수 설정
 
-Vercel 등에 배포할 때:
-1. 환경 변수를 배포 플랫폼에 설정
-2. `GOOGLE_PRIVATE_KEY`의 `\n`이 제대로 처리되는지 확인
-3. 일부 플랫폼에서는 `\n`을 실제 줄바꿈으로 변환해야 할 수 있음
+Vercel에 배포할 때 환경 변수를 설정하는 방법입니다.
+
+### 7.1 Vercel 대시보드에서 설정 (권장)
+
+1. [Vercel 대시보드](https://vercel.com/dashboard) 접속
+2. 프로젝트 선택 (예: sungwon-landing-official)
+3. 상단 탭에서 **"Settings"** 클릭
+4. 좌측 메뉴에서 **"Environment Variables"** 클릭
+5. 다음 환경 변수를 하나씩 추가:
+
+#### GOOGLE_SERVICE_ACCOUNT_EMAIL
+| 항목 | 값 |
+|------|-----|
+| Name | `GOOGLE_SERVICE_ACCOUNT_EMAIL` |
+| Value | `your-service@your-project.iam.gserviceaccount.com` |
+| Environment | Production, Preview, Development 모두 체크 |
+
+**"Add"** 버튼 클릭
+
+#### GOOGLE_PRIVATE_KEY
+| 항목 | 값 |
+|------|-----|
+| Name | `GOOGLE_PRIVATE_KEY` |
+| Value | (아래 참고) |
+| Environment | Production, Preview, Development 모두 체크 |
+
+**Value 입력 방법:**
+```
+-----BEGIN PRIVATE KEY-----
+MIIEvQIBADANBgkqhkiG9w0BAQEFA...
+(중간 키 내용)
+...xyzABC123==
+-----END PRIVATE KEY-----
+```
+
+> **중요:** Vercel에서는 `\n`을 실제 줄바꿈으로 변환하여 입력해야 합니다.
+> JSON 파일의 `private_key` 값에서 `\n`을 실제 Enter로 바꿔서 입력하세요.
+
+**"Add"** 버튼 클릭
+
+#### GOOGLE_SPREADSHEET_ID
+| 항목 | 값 |
+|------|-----|
+| Name | `GOOGLE_SPREADSHEET_ID` |
+| Value | `1234567890abcdefghijklmnop` |
+| Environment | Production, Preview, Development 모두 체크 |
+
+**"Add"** 버튼 클릭
+
+### 7.2 Vercel CLI로 설정
+
+터미널에서 직접 환경 변수를 설정할 수도 있습니다.
+
+```bash
+# Vercel CLI 설치 (이미 설치되어 있다면 생략)
+npm i -g vercel
+
+# 프로젝트 디렉토리에서 로그인
+vercel login
+
+# 환경 변수 추가
+vercel env add GOOGLE_SERVICE_ACCOUNT_EMAIL
+# 값 입력 후 Enter, Production/Preview/Development 선택
+
+vercel env add GOOGLE_PRIVATE_KEY
+# 값 입력 (여러 줄인 경우 따옴표로 감싸기)
+
+vercel env add GOOGLE_SPREADSHEET_ID
+# 값 입력 후 Enter
+```
+
+### 7.3 환경 변수 설정 후 재배포
+
+환경 변수를 추가한 후에는 **재배포**가 필요합니다.
+
+**방법 1: Vercel 대시보드에서**
+1. 프로젝트 → "Deployments" 탭
+2. 가장 최근 배포 우측의 **"..."** 클릭
+3. **"Redeploy"** 선택
+
+**방법 2: CLI로**
+```bash
+vercel --prod
+```
+
+**방법 3: Git Push**
+```bash
+git add .
+git commit -m "trigger redeploy"
+git push
+```
+
+### 7.4 환경 변수 확인
+
+배포 후 환경 변수가 제대로 적용되었는지 확인:
+
+1. Vercel 대시보드 → 프로젝트 → "Settings" → "Environment Variables"
+2. 설정한 3개의 변수가 모두 표시되는지 확인
+3. 각 변수 옆의 **눈 아이콘**을 클릭하면 값 확인 가능
+
+### 7.5 PRIVATE_KEY 문제 해결
+
+Vercel에서 `GOOGLE_PRIVATE_KEY` 관련 오류가 발생하면:
+
+#### 오류: "error:1E08010C:DECODER routines::unsupported"
+- `\n`이 문자열 그대로 들어간 경우
+- 해결: 실제 줄바꿈으로 변환하여 다시 입력
+
+#### 오류: "Invalid PEM formatted message"
+- 키 형식이 잘못된 경우
+- 해결: JSON 파일에서 `private_key` 값을 정확히 복사
+
+#### 테스트 방법
+배포된 사이트에서:
+1. 브라우저 개발자 도구 (F12) → Network 탭
+2. 페이지 새로고침
+3. `/api/track` 요청 확인
+4. 응답이 `{"success":true}` 이면 정상
+5. `{"success":true,"skipped":true}` 이면 환경 변수 미설정
+
+---
+
+## 8. 요약 체크리스트
+
+배포 전 확인사항:
+
+- [ ] Google Cloud Console에서 프로젝트 생성
+- [ ] Google Sheets API 활성화
+- [ ] 서비스 계정 생성 및 JSON 키 다운로드
+- [ ] Google Spreadsheet 생성 (Sessions, PageViews 시트)
+- [ ] 서비스 계정 이메일에 스프레드시트 편집 권한 부여
+- [ ] 로컬 `.env.local`에 환경 변수 설정 및 테스트
+- [ ] Vercel 환경 변수 설정 (3개)
+- [ ] 재배포 후 트래킹 동작 확인
