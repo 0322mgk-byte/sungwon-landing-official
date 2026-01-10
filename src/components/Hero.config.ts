@@ -26,17 +26,17 @@ export const YOUTUBE_X = 0            // 좌우 이동 (%) - 음수: 왼쪽, 양
 export const YOUTUBE_Y = -11.5            // 상하 이동 (%) - 음수: 위로, 양수: 아래로
 
 // 유튜브 영상 크기/위치 조절 (모바일)
-export const MOBILE_YOUTUBE_SCALE = 40  // 모바일 확대/축소 (%)
+export const MOBILE_YOUTUBE_SCALE = 41  // 모바일 확대/축소 (%)
 export const MOBILE_YOUTUBE_X = 0        // 모바일 좌우 이동 (%)
-export const MOBILE_YOUTUBE_Y = 10        // 모바일 상하 이동 (%)
+export const MOBILE_YOUTUBE_Y = 9.5        // 모바일 상하 이동 (%)
 
 // ============================================
 // 📐 히어로 섹션 레이아웃
 // ============================================
-// svh = Small Viewport Height (브라우저 UI가 표시된 상태 기준)
-// 카카오톡 인앱 브라우저, 일반 브라우저 등에서 일관된 높이 유지
-export const HERO_HEIGHT = "90svh"      // PC 히어로 섹션 높이
-export const MOBILE_HERO_HEIGHT = "48svh" // 모바일 히어로 섹션 높이
+// vw = Viewport Width 기반 - 모든 브라우저에서 일관된 높이 유지
+// 카카오톡 인앱 브라우저, 일반 브라우저 등에서 스크롤해도 변하지 않음
+export const HERO_HEIGHT = "90vh"       // PC 히어로 섹션 높이
+export const MOBILE_HERO_HEIGHT = "90vw" // 모바일 히어로 섹션 높이 (화면 너비의 85%)
 export const HERO_BG = "rgba(0,0,0,1)" // 배경색 - rgba(R,G,B,투명도 0~1)
 
 // ============================================
