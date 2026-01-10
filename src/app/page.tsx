@@ -30,7 +30,7 @@ export default function Home() {
           className="relative flex flex-col items-center justify-start"
           style={{
             width: '100vw',
-            height: '100vw',
+            height: '120vw',
             backgroundColor: 'rgba(255,255,255,1)',
           }}
         >
@@ -47,13 +47,13 @@ export default function Home() {
 
           {/* 메인 이미지 */}
           <Image
-            src="/black-main.png"
+            src="/mobile-body (1).png"
             alt="군산 성원상떼빌"
             width={240}
             height={0}
             style={{
-              width: '60%',
-              maxWidth: '240px',
+              width: '100%',
+              maxWidth: '290px',
               height: 'auto',
               marginTop: '8%',
             }}
@@ -76,7 +76,7 @@ export default function Home() {
                 lineHeight: 1.4,
               }}
             >
-              월 30만원대
+              월 30만원대로
             </div>
             <div
               style={{
@@ -179,12 +179,12 @@ export default function Home() {
             width={150}
             height={0}
             style={{
-              width: '43%',
-              maxWidth: '160px',
+              width: '70%',
+              maxWidth: '180px',
               height: 'auto',
               position: 'absolute',
               bottom: '0',
-              right: '3%',
+              right: '6%',
               filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25))',
             }}
           />

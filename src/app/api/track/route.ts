@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { saveSession, savePageView, updatePageViewExit } from '@/lib/googleSheets'
 
+// 환경변수 체크 - Google Sheets 설정이 없으면 tracking 스킵
+const isTrackingEnabled = !!(
+  process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL &&
+  process.env.GOOGLE_PRIVATE_KEY &&
+  process.env.GOOGLE_SPREADSHEET_ID
+)
+
 // IP에서 지역 정보 조회 (ip-api.com 사용 - 무료)
 async function getGeoInfo(ip: string) {
   try {
@@ -53,6 +60,11 @@ function classifyReferrer(referrer: string) {
 }
 
 export async function POST(request: NextRequest) {
+  // 환경변수가 없으면 즉시 성공 응답 반환 (tracking 스킵)
+  if (!isTrackingEnabled) {
+    return NextResponse.json({ success: true, skipped: true })
+  }
+
   try {
     const body = await request.json()
     const { action, sessionId, page, enterTime, exitTime, duration, referrer } = body
